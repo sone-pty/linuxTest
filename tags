@@ -1,0 +1,228 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BUFFSIZE	chatroom/client.h	10;"	d
+BUFFSIZE	chatroom/server.h	11;"	d
+BUFFSIZE	common.h	3;"	d
+BUFFSIZE	sysHeader.h	5;"	d
+CC	Makefile	/^CC=g++$/;"	m
+CFLAGS	Makefile	/^CFLAGS= -g -Wall$/;"	m
+COMMON_H	common.h	2;"	d
+CPPFLAGS	Makefile	/^CPPFLAGS= $/;"	m
+ERROR	chatroom/struct_data.h	/^	LOG,TRANSLATE,ERROR$/;"	e	enum:PROTOCOL_ID
+ERRORSIZE	chatroom/struct_data.h	/^	ERRORSIZE = sizeof(error)$/;"	e	enum:__anon1
+FILENAME	process/writetoTemp.c	2;"	d	file:
+FILE_LEN	process/mmap_r.c	3;"	d	file:
+FILE_LEN	process/mmap_w.c	3;"	d	file:
+LDFLAGS	Makefile	/^LDFLAGS=$/;"	m
+LOG	chatroom/struct_data.h	/^	LOG,TRANSLATE,ERROR$/;"	e	enum:PROTOCOL_ID
+LOGSIZE	chatroom/struct_data.h	/^	LOGSIZE = sizeof(log),$/;"	e	enum:__anon1
+PROTOCOL_ID	chatroom/struct_data.h	/^enum PROTOCOL_ID$/;"	g
+Perror	chatroom/struct_data.h	/^}error,*Perror;$/;"	t	typeref:struct:_ERROR_
+STAT	pthread/main.c	/^typedef struct STAT$/;"	s	file:
+STATSIZE	pthread/main.c	2;"	d	file:
+STU	process/fifo_r.c	/^typedef struct STU$/;"	s	file:
+STU	process/fifo_w.c	/^typedef struct STU$/;"	s	file:
+STU	process/mmap_r.c	/^typedef struct STU$/;"	s	file:
+STU	process/mmap_w.c	/^typedef struct STU$/;"	s	file:
+TEACHER	process/fifo_r.c	/^typedef struct TEACHER$/;"	s	file:
+TEACHER	process/fifo_w.c	/^typedef struct TEACHER$/;"	s	file:
+TRANSIZE	chatroom/struct_data.h	/^	TRANSIZE = sizeof(translate),$/;"	e	enum:__anon1
+TRANSLATE	chatroom/struct_data.h	/^	LOG,TRANSLATE,ERROR$/;"	e	enum:PROTOCOL_ID
+_CHAT_H_	chatroom/struct_data.h	2;"	d
+_CLIENT_H_	chatroom/client.h	2;"	d
+_ERROR_	chatroom/struct_data.h	/^typedef struct _ERROR_$/;"	s
+_HEADER_H_	test/include/header.h	2;"	d
+_IOHEADER_H	io/IOHeader.h	2;"	d
+_JOB	pthread/jobqueue.h	/^typedef struct _JOB$/;"	s
+_JOBQUEUE	pthread/jobqueue.h	/^typedef struct _JOBQUEUE$/;"	s
+_JOBQUEUE_H	pthread/jobqueue.h	2;"	d
+_LOG_	chatroom/struct_data.h	/^typedef struct _LOG_$/;"	s
+_SERVER_H_	chatroom/server.h	2;"	d
+_STATUS	chatroom/server.h	/^typedef struct _STATUS$/;"	s
+_SYSHEADER_H	sysHeader.h	2;"	d
+_TRANSLATE_	chatroom/struct_data.h	/^typedef struct _TRANSLATE_$/;"	s
+add	test/add.c	/^int add(int a,int b)$/;"	f
+bar	pthread/testbarrier.c	/^static pthread_barrier_t bar;$/;"	v	file:
+buf	pthread/proc_cons.c	/^int buf[1024];$/;"	v
+cleanup	pthread/main.c	/^void cleanup(void* arg)$/;"	f
+cli_statlist	chatroom/server.h	/^		vector<pstatus> cli_statlist;$/;"	m	class:server
+client	chatroom/client.cpp	/^client::client(const string& serfifoname,const string& name)$/;"	f	class:client
+client	chatroom/client.h	/^class client$/;"	c
+cons_index	pthread/proc_cons.c	/^int cons_index;$/;"	v
+consum	pthread/proc_cons.c	/^void consum()$/;"	f
+consumer	pthread/proc_cons.c	/^void* consumer(void* arg)$/;"	f
+count	io/deepDir.c	/^static int count = -1;$/;"	v	file:
+count	pthread/main.c	/^	int count;$/;"	m	struct:STAT	file:
+data	chatroom/struct_data.h	/^	char data[100];$/;"	m	struct:_TRANSLATE_
+datarecv	chatroom/server.h	/^		char datarecv[BUFFSIZE];$/;"	m	class:server
+deep	io/deepDir.c	/^void deep(const char* path)$/;"	f
+error	chatroom/struct_data.h	/^}error,*Perror;$/;"	t	typeref:struct:_ERROR_
+find	chatroom/server.cpp	/^pstatus server::find(const char* name,int* index)$/;"	f	class:server
+flag	signal/sync_proc.c	/^static volatile int flag;$/;"	v	file:
+getSerFifo	chatroom/server.cpp	/^int server::getSerFifo(const char* name)$/;"	f	class:server
+hold_stat	pthread/main.c	/^void hold_stat(pst p)$/;"	f
+id	chatroom/struct_data.h	/^	PROTOCOL_ID id;$/;"	m	struct:_ERROR_
+id	chatroom/struct_data.h	/^	PROTOCOL_ID id;$/;"	m	struct:_LOG_
+id	chatroom/struct_data.h	/^	PROTOCOL_ID id;$/;"	m	struct:_TRANSLATE_
+id	process/fifo_r.c	/^	char id;$/;"	m	struct:STU	file:
+id	process/fifo_r.c	/^	char id;$/;"	m	struct:TEACHER	file:
+id	process/fifo_w.c	/^	char id;$/;"	m	struct:STU	file:
+id	process/fifo_w.c	/^	char id;$/;"	m	struct:TEACHER	file:
+id	process/mmap_r.c	/^	int id;$/;"	m	struct:STU	file:
+id	process/mmap_w.c	/^	int id;$/;"	m	struct:STU	file:
+id	pthread/main.c	/^	int id;$/;"	m	struct:STAT	file:
+identity	chatroom/struct_data.h	/^	char identity[4];$/;"	m	struct:_LOG_
+ind	pthread/proc_cons.c	/^int ind;$/;"	v
+info	chatroom/struct_data.h	/^	char info[50];$/;"	m	struct:_ERROR_
+info	process/fifo_r.c	/^	char info[20];$/;"	m	struct:STU	file:
+info	process/fifo_w.c	/^	char info[20];$/;"	m	struct:STU	file:
+init_queue	pthread/jobqueue.c	/^int init_queue(pjob q)$/;"	f
+init_stat	pthread/main.c	/^pst init_stat()$/;"	f
+jnext	pthread/jobqueue.h	/^	struct _JOB* jnext;$/;"	m	struct:_JOB	typeref:struct:_JOB::_JOB
+job	pthread/jobqueue.h	/^}job,*pjob;$/;"	t	typeref:struct:_JOB
+job_append	pthread/jobqueue.c	/^int job_append(pjobqueue que,pjob job)$/;"	f
+job_find	pthread/jobqueue.c	/^pjob job_find(pjobqueue que,pthread_t id)$/;"	f
+job_insert	pthread/jobqueue.c	/^int job_insert(pjobqueue que,pjob job)$/;"	f
+job_remove	pthread/jobqueue.c	/^int job_remove(pjobqueue que,pjob job)$/;"	f
+jobqueue	pthread/jobqueue.h	/^}jobqueue,*pjobqueue;$/;"	t	typeref:struct:_JOBQUEUE
+jprev	pthread/jobqueue.h	/^	struct _JOB* jprev;$/;"	m	struct:_JOB	typeref:struct:_JOB::_JOB
+lock	pthread/main.c	/^	pthread_mutex_t lock;$/;"	m	struct:STAT	file:
+lock	pthread/proc_cons.c	/^pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+lock_reg	io/filelock.c	/^int lock_reg(int fd,int cmd,int type,off_t offset,int where,off_t len)$/;"	f
+lock_test	io/filelock.c	/^int lock_test(int fd,int type,off_t offset,int where,off_t len)$/;"	f
+lockfile	io/filelock.c	/^int lockfile(int fd)$/;"	f
+log	chatroom/struct_data.h	/^}log,*plog;$/;"	t	typeref:struct:_LOG_
+log_status	chatroom/struct_data.h	/^	bool log_status;$/;"	m	struct:_LOG_
+login	chatroom/client.cpp	/^bool client::login(bool status)$/;"	f	class:client
+main	chatroom/main_client.cpp	/^int main(void)$/;"	f
+main	chatroom/main_server.cpp	/^int main(void)$/;"	f
+main	io/chmod.c	/^int main(int argc,char* arg[])$/;"	f
+main	io/copybymmap.c	/^int main(int argc,char** arg)$/;"	f
+main	io/deepDir.c	/^int main(int argc, char const *argv[])$/;"	f
+main	io/dir.c	/^int int main(int argc, char const *argv[])$/;"	f
+main	io/sendtofifo.c	/^int main(void)$/;"	f
+main	io/size.c	/^int main(void)$/;"	f
+main	io/test.c	/^int main(int argc, char const *argv[])$/;"	f
+main	io/testselect.c	/^int main(void)$/;"	f
+main	io/write.c	/^int main(void)$/;"	f
+main	process/child.c	/^int main(void)$/;"	f
+main	process/fifo_r.c	/^int main(int argc,char**argv)$/;"	f
+main	process/fifo_w.c	/^int main(int argc,char **argv)$/;"	f
+main	process/mmap.c	/^int main(void)$/;"	f
+main	process/mmap_r.c	/^int main(int argc,char** argv)$/;"	f
+main	process/mmap_w.c	/^int main(int argc,char** argv)$/;"	f
+main	process/pipe.c	/^int main(void)$/;"	f
+main	process/test.c	/^int main(void)$/;"	f
+main	process/upper.c	/^int main(void)$/;"	f
+main	process/waits.c	/^int main(int argc, char const *argv[])$/;"	f
+main	process/wrapper.c	/^int main(int argc,char**argv)$/;"	f
+main	process/writetoTemp.c	/^int main(void)$/;"	f
+main	pthread/main.c	/^int main(void)$/;"	f
+main	pthread/proc_cons.c	/^int main(void)$/;"	f
+main	pthread/testbarrier.c	/^int main(void)$/;"	f
+main	signal/alrm.c	/^int main(void)$/;"	f
+main	signal/job.c	/^int main(void)$/;"	f
+main	signal/main.c	/^int main(void)$/;"	f
+main	signal/sign_set.c	/^int main(void)$/;"	f
+main	signal/sleep.c	/^int main(void)$/;"	f
+main	signal/sync_proc.c	/^int main(void)$/;"	f
+main	test/main.c	/^int main(void)$/;"	f
+main	test/test.cpp	/^int main(void)$/;"	f
+makethread	pthread/main.c	/^int makethread(void* (*fn)(void*),void* arg,pthread_t* ppid)$/;"	f
+name	chatroom/client.h	/^		char name[4];$/;"	m	class:client
+name	chatroom/server.h	/^	char name[4];$/;"	m	struct:_STATUS
+name	process/fifo_r.c	/^	char name[10];$/;"	m	struct:STU	file:
+name	process/fifo_r.c	/^	char name[10];$/;"	m	struct:TEACHER	file:
+name	process/fifo_w.c	/^	char name[10];$/;"	m	struct:STU	file:
+name	process/fifo_w.c	/^	char name[10];$/;"	m	struct:TEACHER	file:
+name	process/mmap_r.c	/^	char name[20];$/;"	m	struct:STU	file:
+name	process/mmap_w.c	/^	char name[20];$/;"	m	struct:STU	file:
+new	signal/sync_proc.c	/^static sigset_t zero,new,old;$/;"	v	file:
+notempty	pthread/proc_cons.c	/^pthread_cond_t notempty = PTHREAD_COND_INITIALIZER;$/;"	v
+notfull	pthread/proc_cons.c	/^pthread_cond_t notfull = PTHREAD_COND_INITIALIZER;$/;"	v
+obj	Makefile	/^obj = $(patsubst %.cpp,%.o,$(src))$/;"	m
+old	signal/sync_proc.c	/^static sigset_t zero,new,old;$/;"	v	file:
+online	chatroom/client.h	/^		bool online = false;$/;"	m	class:client
+online	chatroom/server.h	/^	bool online;$/;"	m	struct:_STATUS
+openDir	io/dir.c	/^DIR* openDir(const char* path)$/;"	f
+parse	chatroom/client.cpp	/^void client::parse(int len)$/;"	f	class:client
+parse	chatroom/server.cpp	/^void server::parse(int len)$/;"	f	class:server
+parsedata	chatroom/server.cpp	/^void server::parsedata(int len)$/;"	f	class:server
+pjob	pthread/jobqueue.h	/^}job,*pjob;$/;"	t	typeref:struct:_JOB
+pjobqueue	pthread/jobqueue.h	/^}jobqueue,*pjobqueue;$/;"	t	typeref:struct:_JOBQUEUE
+plog	chatroom/struct_data.h	/^}log,*plog;$/;"	t	typeref:struct:_LOG_
+pr_mask	common.c	/^void pr_mask()$/;"	f
+pr_mask	signal/sleep.c	/^void pr_mask()$/;"	f
+pri_fifo	chatroom/client.h	/^		int pri_fifo;$/;"	m	class:client
+pri_fifo	chatroom/server.h	/^	int pri_fifo;$/;"	m	struct:_STATUS
+print_file_info	io/deepDir.c	/^void print_file_info(const char* name, int len)$/;"	f
+printa	chatroom/server.cpp	/^void printa(const char* str,int len)$/;"	f
+printsigset	signal/sign_set.c	/^void printsigset(const sigset_t* set)$/;"	f
+printsigset	signal/sleep.c	/^void printsigset(const sigset_t* set)$/;"	f
+proc	pthread/main.c	/^void* proc(void* arg)$/;"	f
+proc_index	pthread/proc_cons.c	/^int proc_index;$/;"	v
+produce	pthread/proc_cons.c	/^void produce()$/;"	f
+producer	pthread/proc_cons.c	/^void* producer(void* arg)$/;"	f
+pst	pthread/main.c	/^}st,*pst;$/;"	t	typeref:struct:STAT	file:
+pstatus	chatroom/server.h	/^}status,*pstatus;$/;"	t	typeref:struct:_STATUS
+pstu	process/fifo_r.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+pstu	process/fifo_w.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+pstu	process/mmap_r.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+pstu	process/mmap_w.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+ptea	process/fifo_r.c	/^}tea,*ptea;$/;"	t	typeref:struct:TEACHER	file:
+ptea	process/fifo_w.c	/^}tea,*ptea;$/;"	t	typeref:struct:TEACHER	file:
+ptr	pthread/main.c	/^static pst ptr;$/;"	v	file:
+ptranslate	chatroom/struct_data.h	/^}translate,*ptranslate;$/;"	t	typeref:struct:_TRANSLATE_
+qhead	pthread/jobqueue.h	/^	pjob qhead;$/;"	m	struct:_JOBQUEUE
+qtail	pthread/jobqueue.h	/^	pjob qtail;$/;"	m	struct:_JOBQUEUE
+recvbuf	chatroom/server.h	/^		char recvbuf[BUFFSIZE];$/;"	m	class:server
+release_stat	pthread/main.c	/^void release_stat(pst p)$/;"	f
+run	pthread/testbarrier.c	/^void* run(void* arg)$/;"	f
+rwlock	pthread/jobqueue.h	/^	pthread_rwlock_t rwlock;$/;"	m	struct:_JOBQUEUE
+sal	process/fifo_r.c	/^	int sal;$/;"	m	struct:TEACHER	file:
+sal	process/fifo_w.c	/^	int sal;$/;"	m	struct:TEACHER	file:
+sendbuf	chatroom/server.h	/^		char sendbuf[BUFFSIZE];$/;"	m	class:server
+ser_fifo	chatroom/server.h	/^		int ser_fifo;$/;"	m	class:server
+ser_recv	chatroom/client.h	/^		char ser_recv[BUFFSIZE];$/;"	m	class:client
+serfifo	chatroom/client.h	/^		int serfifo;$/;"	m	class:client
+server	chatroom/server.cpp	/^server::server()$/;"	f	class:server
+server	chatroom/server.h	/^class server$/;"	c
+sex	process/mmap_r.c	/^	char sex;$/;"	m	struct:STU	file:
+sex	process/mmap_w.c	/^	char sex;$/;"	m	struct:STU	file:
+sleep	signal/sleep.c	/^unsigned int sleep(unsigned int sec)$/;"	f
+src	Makefile	/^src = $(wildcard *.cpp)$/;"	m
+src	chatroom/struct_data.h	/^	char src[4];$/;"	m	struct:_TRANSLATE_
+st	pthread/main.c	/^}st,*pst;$/;"	t	typeref:struct:STAT	file:
+start	chatroom/client.cpp	/^void client::start()$/;"	f	class:client
+start	chatroom/server.cpp	/^void server::start()$/;"	f	class:server
+status	chatroom/server.h	/^}status,*pstatus;$/;"	t	typeref:struct:_STATUS
+std_recv	chatroom/client.h	/^		char std_recv[100];$/;"	m	class:client
+stu	process/fifo_r.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+stu	process/fifo_w.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+stu	process/mmap_r.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+stu	process/mmap_w.c	/^}stu,*pstu;$/;"	t	typeref:struct:STU	file:
+sub	test/sub.c	/^int sub(int a,int b)$/;"	f
+sys_error	chatroom/common.cpp	/^void sys_error(const char* tip,int exitcode)$/;"	f
+sys_error	common.c	/^void sys_error(const char* buf,int exitcode)$/;"	f
+syserr	signal/sync_proc.c	/^void syserr(const char* str,int exitcode)$/;"	f
+target	Makefile	/^target = app$/;"	m
+tea	process/fifo_r.c	/^}tea,*ptea;$/;"	t	typeref:struct:TEACHER	file:
+tea	process/fifo_w.c	/^}tea,*ptea;$/;"	t	typeref:struct:TEACHER	file:
+tell_child	signal/sync_proc.c	/^void tell_child(pid_t pid)$/;"	f
+tell_parent	signal/sync_proc.c	/^void tell_parent(pid_t pid)$/;"	f
+tell_wait	signal/sync_proc.c	/^void tell_wait()$/;"	f
+tid	pthread/jobqueue.h	/^	pthread_t tid;$/;"	m	struct:_JOB
+translate	chatroom/struct_data.h	/^}translate,*ptranslate;$/;"	t	typeref:struct:_TRANSLATE_
+usr	signal/sign_set.c	/^void usr(int p)$/;"	f
+usr	signal/sleep.c	/^void usr(int signo)$/;"	f
+usr	signal/sync_proc.c	/^void usr()$/;"	f
+wait_child	signal/sync_proc.c	/^void wait_child()$/;"	f
+wait_parent	signal/sync_proc.c	/^void wait_parent()$/;"	f
+wakeup	signal/sleep.c	/^static void wakeup(int signo)$/;"	f	file:
+zero	signal/sync_proc.c	/^static sigset_t zero,new,old;$/;"	v	file:
+~client	chatroom/client.cpp	/^client::~client()$/;"	f	class:client
+~server	chatroom/server.cpp	/^server::~server()$/;"	f	class:server

@@ -1,0 +1,117 @@
+#!/bin/bash
+
+:<<!
+read -p "输入三个整数值：" a1 a2 a3
+echo "回显输入的三个整数：$a1,$a2,$a3"
+echo '单引号输出普通字符'
+echo '$PATH'
+echo "当前工作目录是：" `pwd`
+!
+
+:<<!
+read -p "请输入一个文件名，以a开头b结尾且长度为3:" name
+declare temp=`echo $name | grep "a.b"`
+if test -z $temp
+then
+	echo "文件名不匹配，创建文件失败！"
+else
+	echo "创建了新文件！"
+	touch $name
+fi
+!
+
+:<<!
+read -p "请输入一个文件名，以a开头b结尾且长度为3:" name
+declare temp=`echo $name | grep "a.b"`
+if [ "$temp" == "" ]
+then
+	echo "文件名不匹配，创建文件失败！"
+else
+	echo "创建了新文件！"
+	touch $name
+fi
+!
+
+:<<!
+read n
+#if test $n -gt 0 -o $n -le -1
+if [ $n -gt 0 ] || [ $n -le -1 ]
+then
+	echo "输入的数字符合条件，大小为：$n"
+fi
+!
+:<<!
+select choice in 1 2 3 4 5
+do
+	break
+done
+echo "你选择了$choice"
+!
+
+:<<!
+for file in $(ls /home/sone)
+do
+	if test -d /home/sone/$file
+	then 
+		echo "/home/sone/${file}是目录"
+	elif test -f /home/sone/$file
+	then
+		echo "/home/sone/${file}是普通文件"
+	fi
+done
+!
+
+:<<!
+declare -a arr
+arr[1]=1
+arr[2]=2
+arr[3]=3
+for((i=1;i<=3;i++))
+do
+	echo ${arr[$i]}
+done
+!
+
+:<<!
+index=1
+while [ $index -le 6 ]
+do
+	echo "now the index = $index"
+	let index++
+done
+!
+
+:<<!
+arr=(1 2 3 4 5)
+echo "arr[*]=${arr[*]}"
+echo "the length of arr = ${#arr[*]}"
+echo "arr[1]=${arr[1]}"
+func1()
+{
+	local temp=($1)
+	echo "total args = $#"
+	echo "the array arg:${temp[*]}"
+	echo "the array arg:$@"
+	return 0
+}
+
+func2()
+{
+	local old=($1)
+
+	for((i=0;i<${#old[*]};i++))
+	{
+		old[$i]=$[${old[$i]}*2]
+	}
+	echo ${old[*]}
+}
+
+echo "函数中接收数组参数并输出"
+func1 "${arr[*]}"
+
+echo "函数中接受数组参数并将原值翻倍再返回回来输出"
+newarr=`func2 "${arr[*]}"`
+echo "newarr=${newarr[*]}"
+!
+
+exit 0
