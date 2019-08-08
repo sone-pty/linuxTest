@@ -7,6 +7,11 @@
 
 #define BUFFSIZE PATH_MAX
 
+void te()
+{
+    printf("df\n");
+}
+
 int main(void)
 {
 	char buf[BUFFSIZE];
@@ -31,6 +36,6 @@ int main(void)
 	int nums = readlink(path,buf,BUFFSIZE - 1);
 	buf[nums] = '\0';
 	printf("lntag:%s\n",buf);
-
+    te();
 	return 0;
 }
