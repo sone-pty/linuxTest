@@ -4,9 +4,9 @@
 #mkdir /etc/shadowsocks
 
 echo '{
-	"server":"139.180.199.76",
+	"server":"",
     "server_port":8888,
-    "password":"987712pty",
+    "password":"",
     "timeout":600,
     "method":"aes-256-cfb",
     "fast_open": false
