@@ -1,12 +1,13 @@
-#include <iostream>
-#include <string.h>
 #include "../sysHeader.h"
-#include <vector>
-#include <string>
-
-using namespace std;
+#include "../std.h"
+#include <bitset>
 
 static char table[65]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+struct s{
+	int i;
+	char c;
+};
 
 char Convert(unsigned char c)
 {
@@ -108,7 +109,22 @@ int main(void)
 		exit(1);
 	}
 	*/
-	char* str = "soneytp@163.com";
-	cout << encode(str,strlen(str)) << endl;
+	int i = 8;
+	char* p = (char*)&i;
+
+	for(char* k = p;k != p + 4;++k)
+	{
+		int m = 1 << 7;
+		for(int n = 0;n < 8;++n)
+		{
+			if(*k & m)
+				cout << "1";
+			else
+				cout << "0";
+			m = m >> 1;
+		}
+	}
+	cout << endl;
+
 	return 0;
 }

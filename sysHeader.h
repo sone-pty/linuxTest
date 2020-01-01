@@ -7,6 +7,7 @@
 //header files
 #include <sys/wait.h>
 #include <sys/mman.h>
+#include <sys/syscall.h>
 #include <signal.h>
 #include <pthread.h>
 #include <sys/select.h>
@@ -25,4 +26,5 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <mqueue.h>
+#include <assert.h>
 #endif

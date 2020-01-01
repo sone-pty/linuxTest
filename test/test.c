@@ -7,6 +7,11 @@ int* te()
 	return &i;
 }
 
+struct te{
+	int i;
+	char c;
+};
+
 int main(void)
 {/*
 	int *p = NULL;

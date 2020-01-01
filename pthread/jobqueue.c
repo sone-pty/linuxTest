@@ -28,7 +28,6 @@ int job_insert(pjobqueue que,pjob job)
 	
 	job->jprev = NULL;
 	job->jnext = que->qhead;
-
 	if(que->qhead == NULL)
 		que->qtail = job;
 	else
@@ -40,8 +39,7 @@ int job_insert(pjobqueue que,pjob job)
 	return 0;
 }
 
-//insert into the tail of queue
-int job_append(pjobqueue que,pjob job)
+//insert into the tail of queu[<0;85;10M]
 {
 	if(que == NULL || job == NULL)
 		return -1;
