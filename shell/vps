@@ -1,0 +1,19 @@
+#!/bin/bash
+
+apt-get install python-pip python-gevent python-m2crypto
+pip install --upgrade setuptools
+pip install shadowsocks
+mkdir /etc/shadowsocks
+
+echo '{
+	"server":"45.32.79.94",
+    "server_port":8888,
+    "password":"987712pty",
+    "timeout":600,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}' > /etc/shadowsocks/config.json
+
+sed -i "s/libcrypto.EVP_CIPHER_CTX_cleanup/libcrypto.EVP_CIPHER_CTX_reset/g" /usr/local/lib/python2.7/dist-packages/shadowsocks/crypto/openssl.py
+
+ssserver -c /etc/shadowsocks/config.json -d start

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sudo service privoxy stop
+
+git config --global --unset http.proxy
+git config --global --unset https.proxy
