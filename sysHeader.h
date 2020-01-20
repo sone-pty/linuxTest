@@ -27,4 +27,5 @@
 #include <netinet/in.h>
 #include <mqueue.h>
 #include <assert.h>
+#include <sys/sendfile.h>
 #endif

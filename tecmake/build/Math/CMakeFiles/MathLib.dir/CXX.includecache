@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sone/pro/tecmake/Math/Math.cpp
+Math.h
+/home/sone/pro/tecmake/Math/Math.h
+
+/home/sone/pro/tecmake/Math/Math.h
+

@@ -1,0 +1,6 @@
+/home/sone/pro/tecmake/build/CMakeFiles/rebuild_cache.dir
+/home/sone/pro/tecmake/build/CMakeFiles/Tutorial.dir
+/home/sone/pro/tecmake/build/CMakeFiles/edit_cache.dir
+/home/sone/pro/tecmake/build/Math/CMakeFiles/rebuild_cache.dir
+/home/sone/pro/tecmake/build/Math/CMakeFiles/MathLib.dir
+/home/sone/pro/tecmake/build/Math/CMakeFiles/edit_cache.dir
