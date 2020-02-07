@@ -64,7 +64,7 @@ int main(void)
 		{
 			memset(buf, 0, 64);
 			int res = read(STDIN_FILENO, buf, 63);
-			//cout << "from stdin:" << res << endl;
+			cout << "from stdin:" << res << endl;
 			write(server_fd, buf, res);
 		}
 	}
