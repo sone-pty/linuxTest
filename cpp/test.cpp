@@ -72,6 +72,5 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
-	//ADD(1, 2);
 	return 0;
 }

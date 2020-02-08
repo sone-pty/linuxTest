@@ -11,6 +11,9 @@
 #include "Log.h"
 #include <string.h>
 #include <memory>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define BYTE_NUMS 8
 #define BUFFSIZE 4096
@@ -28,6 +31,8 @@ namespace util
 int byteorder();
 //返回线程id
 pid_t getTid();
+//通过fd解析地址
+struct sockaddr_in getAddrbyFdV4(int fd);
 
 //时间戳类(us级别)
 class Timestamp{

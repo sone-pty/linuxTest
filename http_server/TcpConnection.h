@@ -20,6 +20,9 @@ public:
 
 	TcpConnection(eventloop* l, int fd, const InetAddress& local_addr, const InetAddress& peer_addr);
 	~TcpConnection();
+	void setConnectionCallback(ConnectionCallback cb) { connection_cb = std::move(cb); }
+    void setCloseCallback(CloseCallback cb) { close_cb = std::move(cb);  }
+    void setMessageCallback(MessageCallback cb) { message_cb = std::move(cb);  }
 private:
 	//对应的套接字
 	std::unique_ptr<Socket> _socket;

@@ -11,6 +11,8 @@
 #include <bitset>
 #include "utils.h"
 #include "../sysHeader.h"
+#include "InetAddress.h"
+#include "Socket.h"
 
 using namespace std;
 using namespace sone;
@@ -47,5 +49,13 @@ int main(void) {
     SONE_LOG_ERROR(logger) << "test macro error";
     SONE_LOG_FMT_ERROR(logger, "test macro fmt error %s", "pty");
 	*/
+	Socket s;
+	s.bindAddr(InetAddress("::", 8987, true));
+	sockaddr_in st = util::getAddrbyFdV4(s.getFd());
+	cout << (sizeof(st) == sizeof(sockaddr_in)) << endl;
+	InetAddress c(st);
+	cout << c.ip_to_string() << endl;
+	cout << c.port_to_string() << endl;
+	cout << (c.family() == AF_INET) << endl;
 	return 0;
 }

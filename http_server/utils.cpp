@@ -31,6 +31,16 @@ namespace util
 			return -1;
 	}
 
+	struct sockaddr_in getAddrbyFdV4(int fd)
+	{
+		struct sockaddr_in addr;
+		memset(&addr, 0, sizeof(addr));
+		socklen_t len = sizeof(addr);
+		if(::getsockname(fd, (sockaddr*)&addr, &len) < 0)
+			SONE_LOG_ERR() << "getsockname() failed";
+		return addr;
+	}
+
 	/*Timestamp*/
 	Timestamp::Timestamp()
 	{

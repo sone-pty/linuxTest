@@ -17,8 +17,9 @@ class Socket{
 public:
 	//默认创建非阻塞套接字
 	explicit Socket(sa_family_t family = AF_INET, int type = SOCK_STREAM, int protocol = IPPROTO_TCP);
-	~Socket();
-	//返回原始fd
+    explicit Socket(int fd, sa_family_t family);
+    ~Socket();
+    //返回原始fd
 	int getFd() const { return _fd; }
 	//为套接字绑定地址
 	void bindAddr(const InetAddress& addr);

@@ -32,7 +32,15 @@ namespace sone
 		int connfd = listen_soc->accept(&addr);
 		if(connfd >= 0)
 		{
-			//
+			//创建TcpConnection
+			InetAddress localaddr(util::getAddrbyFdV4(connfd));
+			TcpConnection::ptr conn = TcpConnection::ptr(new TcpConnection(main_loop, connfd, localaddr, addr));
+			if(connections.find(connfd) != connections.end())
+			{
+				SONE_LOG_ERR() << "connections已经存在该连接，无法添加";
+				abort();
+			}
+			connections[connfd] = conn;
 		}
 	}
 }

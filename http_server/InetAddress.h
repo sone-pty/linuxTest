@@ -24,9 +24,9 @@ public:
 	explicit InetAddress(const char* ip, uint16_t port = 0, bool ipv6 = false);
 	//直接以结构体为参数构造
 	explicit InetAddress(const struct sockaddr_in& addr)
-		:ipv4addr(addr) {}
+		:ipv4addr(addr), _type(IPV4) {}
 	explicit InetAddress(const struct sockaddr_in6& addr)
-		:ipv6addr(addr) {}
+		:ipv6addr(addr), _type(IPV6) {}
 	//地址类型
 	addr_type Addrtype() const { return _type; }
 	//返回地址结构(不可修改)

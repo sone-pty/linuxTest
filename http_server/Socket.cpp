@@ -12,7 +12,13 @@ namespace sone
 		this->family = family;
 	}
 
-	Socket::~Socket()
+    Socket::Socket(int fd, sa_family_t family)
+    {
+        _fd = fd;
+        this->family = family;
+    }
+
+    Socket::~Socket()
 	{
 		if(close(_fd) < 0)
 			SONE_LOG_ERR() << "套接字关闭失败";
