@@ -23,13 +23,19 @@ public:
 	void setConnectionCallback(ConnectionCallback cb) { connection_cb = std::move(cb); }
     void setCloseCallback(CloseCallback cb) { close_cb = std::move(cb);  }
     void setMessageCallback(MessageCallback cb) { message_cb = std::move(cb);  }
+	void connecionEstablished();
+	void connecionDestroyed();
+private:
+	void handleRead();
+	void handleWrite();
+	void handleClose();
 private:
 	//对应的套接字
 	std::unique_ptr<Socket> _socket;
-	//对应的dispatcher
-	std::unique_ptr<dispatcher> _dispatcher;
 	//所属的eventloop
 	eventloop* loop;
+	//对应的dispatcher
+	std::unique_ptr<dispatcher> _dispatcher;
 	//本地地址
 	InetAddress localaddr;
 	//对端地址

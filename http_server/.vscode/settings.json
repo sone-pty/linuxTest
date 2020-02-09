@@ -1,0 +1,9 @@
+{
+    "editor.fontSize": 18,
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false,
+    "editor.highlightActiveIndentGuide": false,
+    "editor.letterSpacing": 1,
+    "editor.renderIndentGuides": false,
+    "editor.minimap.enabled": false
+}

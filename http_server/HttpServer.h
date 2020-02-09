@@ -5,9 +5,13 @@
 #include "Socket.h"
 #include "TcpConnection.h"
 #include <unordered_map>
+#include "eventloopThreadPool.h"
 
 namespace sone
 {
+
+//工作线程数量
+const static int THREAD_NUMS = 20;
 
 class HttpServer{
 public:
@@ -18,6 +22,9 @@ public:
 private:
 	//accept对应的处理回调
 	void AcceptCallback();
+	void onConnection(const TcpConnection::ptr& conn);
+	void onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t);
+	void onClose(const TcpConnection::ptr& conn);
 private:
 	//主线程eventloop
 	eventloop* main_loop;
@@ -27,6 +34,8 @@ private:
 	dispatcher* accept_dispatcher;
 	//保存TCPConnection的map
 	std::unordered_map<int, TcpConnection::ptr> connections;
+	//线程池
+	std::unique_ptr<eventloopThreadPool> _threadpool;
 };
 
 }

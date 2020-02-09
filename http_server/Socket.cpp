@@ -12,7 +12,7 @@ namespace sone
 		this->family = family;
 	}
 
-    Socket::Socket(int fd, sa_family_t family)
+    Socket::Socket(int fd, sa_family_t family, std::string)
     {
         _fd = fd;
         this->family = family;

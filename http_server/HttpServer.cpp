@@ -3,7 +3,7 @@
 namespace sone
 {
 	HttpServer::HttpServer(eventloop* loop, const InetAddress& listenaddr)
-		:main_loop(loop)
+		:main_loop(loop), _threadpool(new eventloopThreadPool(THREAD_NUMS))
 	{
 		//创建监听套接字
 		listen_soc = new Socket();
@@ -23,7 +23,7 @@ namespace sone
 
 	void HttpServer::start()
 	{
-		
+		_threadpool->start();
 	}
 
 	void HttpServer::AcceptCallback()
@@ -32,15 +32,41 @@ namespace sone
 		int connfd = listen_soc->accept(&addr);
 		if(connfd >= 0)
 		{
+			eventloop* ioLoop = _threadpool->getLoop(connfd);
 			//创建TcpConnection
 			InetAddress localaddr(util::getAddrbyFdV4(connfd));
-			TcpConnection::ptr conn = TcpConnection::ptr(new TcpConnection(main_loop, connfd, localaddr, addr));
+			TcpConnection::ptr conn = TcpConnection::ptr(new TcpConnection(ioLoop, connfd, localaddr, addr));
 			if(connections.find(connfd) != connections.end())
 			{
 				SONE_LOG_ERR() << "connections已经存在该连接，无法添加";
 				abort();
 			}
 			connections[connfd] = conn;
+			conn->setConnectionCallback(std::bind(&HttpServer::onConnection, this, std::placeholders::_1));
+			conn->setMessageCallback(std::bind(&HttpServer::onMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+			conn->setCloseCallback(std::bind(&HttpServer::onClose, this, std::placeholders::_1));
+			//连接创建完成后往loop中塞入回调
+			ioLoop->runInLoop(std::bind(&TcpConnection::connecionEstablished, conn));
 		}
+	}
+
+	eventloop* HttpServer::getLoop()
+	{
+		return main_loop;
+	}
+
+	void HttpServer::onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t)
+	{
+
+	}
+
+	void HttpServer::onConnection(const TcpConnection::ptr& conn)
+	{
+
+	}
+
+	void HttpServer::onClose(const TcpConnection::ptr& conn)
+	{
+
 	}
 }
