@@ -3,7 +3,7 @@
 namespace sone
 {
 	TcpConnection::TcpConnection(eventloop* l, int fd, const InetAddress& local_addr, const InetAddress& peer_addr)
-		:_socket(new Socket(fd, AF_INET)), loop(l), _dispatcher(new dispatcher(fd, l)), localaddr(local_addr), peeraddr(peer_addr)
+		:_socket(new Socket(fd, AF_INET, "")), loop(l), _dispatcher(new dispatcher(fd, l)), localaddr(local_addr), peeraddr(peer_addr)
 	{
 		_dispatcher->setReadCallback(std::bind(&TcpConnection::handleRead, this));
 		_dispatcher->setWriteCallback(std::bind(&TcpConnection::handleWrite, this));
@@ -14,5 +14,25 @@ namespace sone
 	TcpConnection::~TcpConnection()
 	{
 
+	}
+
+	void TcpConnection::connecionEstablished()
+	{
+		SONE_LOG_TRACE() << "new conn";
+	}
+
+	void TcpConnection::handleRead()
+	{
+
+	}
+
+	void TcpConnection::handleWrite()
+	{
+
+	}
+
+	void TcpConnection::handleClose()
+	{
+		
 	}
 }

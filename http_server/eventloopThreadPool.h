@@ -14,7 +14,7 @@ public:
 	eventloop* getLoop(int fd);
 private:
 	int _threadNums;
-	std::vector<std::unique_ptr<eventloopThread>> _threads;
+	std::vector<eventloopThread*> _threads;
 	std::vector<eventloop*> _loops;
 };
 

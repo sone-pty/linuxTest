@@ -11,7 +11,7 @@ namespace sone
 		for(int i = 0; i < _threadNums; ++i)
 		{
 			sprintf(name, "Work-Thread#%d", i);
-			auto t = std::unique_ptr<eventloopThread>(new eventloopThread(name));
+			auto t = new eventloopThread(name);
 			_threads.push_back(t);
 			_loops.push_back(t->start());
 		}
