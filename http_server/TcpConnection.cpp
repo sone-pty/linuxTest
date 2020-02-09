@@ -16,30 +16,5 @@ namespace sone
 
 	}
 
-	void TcpConnection::connecionEstablished()
-	{
-		_dispatcher->enableReading();
-		_dispatcher->enableRDhup();
-		connection_cb(shared_from_this());
-	}
 
-	void TcpConnection::connecionDestroyed()
-	{
-
-	}
-
-	void TcpConnection::handleRead()
-	{
-
-	}
-
-	void TcpConnection::handleWrite()
-	{
-
-	}
-
-	void TcpConnection::handleClose()
-	{
-		
-	}
 }

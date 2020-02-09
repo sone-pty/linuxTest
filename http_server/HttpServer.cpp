@@ -1,5 +1,6 @@
 #include "HttpServer.h"
 #include "HttpParser.h"
+#include "HttpConnection.h"
 
 namespace sone
 {
@@ -36,7 +37,7 @@ namespace sone
 			eventloop* ioLoop = _threadpool->getLoop(connfd);
 			//创建TcpConnection
 			InetAddress localaddr(util::getAddrbyFdV4(connfd));
-			TcpConnection::ptr conn = TcpConnection::ptr(new TcpConnection(ioLoop, connfd, localaddr, addr));
+			TcpConnection::ptr conn = TcpConnection::ptr(new HttpConnection(ioLoop, connfd, localaddr, addr));
 			if(connections.find(connfd) != connections.end())
 			{
 				SONE_LOG_ERR() << "connections已经存在该连接，无法添加";
@@ -65,7 +66,7 @@ namespace sone
 	{
 		if(conn)
 		{
-			conn->setContext(new HttpParser());
+			SONE_LOG_TRACE() << "new conn";
 		}
 	}
 

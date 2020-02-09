@@ -72,5 +72,9 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
+	std::unique_ptr<void> p;
+	p.reset(new int(1));
+	if(p.get())
+		cout << "!null" << endl;
 	return 0;
 }

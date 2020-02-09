@@ -11,7 +11,7 @@
 namespace sone
 {
 
-class TcpConnection : nocopyable, std::enable_shared_from_this<TcpConnection>{
+class TcpConnection : public nocopyable, public std::enable_shared_from_this<TcpConnection>{
 public:
 	typedef std::shared_ptr<TcpConnection> ptr;
 	typedef std::function<void(const TcpConnection::ptr&)> ConnectionCallback;
@@ -19,19 +19,17 @@ public:
 	typedef std::function<void(const TcpConnection::ptr&, Buffer*, util::Timestamp)> MessageCallback;
 
 	TcpConnection(eventloop* l, int fd, const InetAddress& local_addr, const InetAddress& peer_addr);
-	~TcpConnection();
+	virtual ~TcpConnection();
 	void setConnectionCallback(ConnectionCallback cb) { connection_cb = std::move(cb); }
     void setCloseCallback(CloseCallback cb) { close_cb = std::move(cb);  }
     void setMessageCallback(MessageCallback cb) { message_cb = std::move(cb);  }
-	void connecionEstablished();
-	void connecionDestroyed();
-	void setContext(void*context);
-	void* getContext();
-private:
-	void handleRead();
-	void handleWrite();
-	void handleClose();
-private:
+	virtual void connecionEstablished() = 0;
+	virtual void connecionDestroyed() = 0;
+protected:
+	virtual void handleRead() = 0;
+	virtual void handleWrite() = 0;
+	virtual void handleClose() = 0;
+protected:
 	//对应的套接字
 	std::unique_ptr<Socket> _socket;
 	//所属的eventloop
@@ -45,9 +43,7 @@ private:
 	//输入输出缓冲区
 	Buffer input_buffer;
 	Buffer output_buffer;
-	//协议无关的内容
-	std::unique_ptr<void *> context;
-private:
+protected:
 	ConnectionCallback connection_cb;
 	CloseCallback close_cb;
 	MessageCallback message_cb;
