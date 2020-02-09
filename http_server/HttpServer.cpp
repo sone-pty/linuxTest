@@ -66,7 +66,7 @@ namespace sone
 	{
 		if(conn)
 		{
-			SONE_LOG_TRACE() << "new conn";
+			
 		}
 	}
 

@@ -27,7 +27,7 @@ namespace sone
 
 	void HttpConnection::handleRead()
 	{
-
+		
 	}
 
 	void HttpConnection::handleWrite()
