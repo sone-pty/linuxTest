@@ -25,6 +25,8 @@ public:
     void setMessageCallback(MessageCallback cb) { message_cb = std::move(cb);  }
 	void connecionEstablished();
 	void connecionDestroyed();
+	void setContext(void*context);
+	void* getContext();
 private:
 	void handleRead();
 	void handleWrite();
@@ -43,6 +45,8 @@ private:
 	//输入输出缓冲区
 	Buffer input_buffer;
 	Buffer output_buffer;
+	//协议无关的内容
+	std::unique_ptr<void *> context;
 private:
 	ConnectionCallback connection_cb;
 	CloseCallback close_cb;

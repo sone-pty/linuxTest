@@ -18,7 +18,14 @@ namespace sone
 
 	void TcpConnection::connecionEstablished()
 	{
-		SONE_LOG_TRACE() << "new conn";
+		_dispatcher->enableReading();
+		_dispatcher->enableRDhup();
+		connection_cb(shared_from_this());
+	}
+
+	void TcpConnection::connecionDestroyed()
+	{
+
 	}
 
 	void TcpConnection::handleRead()

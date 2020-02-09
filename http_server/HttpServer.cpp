@@ -1,4 +1,5 @@
 #include "HttpServer.h"
+#include "HttpParser.h"
 
 namespace sone
 {
@@ -62,7 +63,10 @@ namespace sone
 
 	void HttpServer::onConnection(const TcpConnection::ptr& conn)
 	{
-
+		if(conn)
+		{
+			conn->setContext(new HttpParser());
+		}
 	}
 
 	void HttpServer::onClose(const TcpConnection::ptr& conn)
