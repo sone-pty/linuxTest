@@ -59,14 +59,14 @@ namespace sone
 
 	void HttpServer::onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t)
 	{
-
+		SONE_LOG_TRACE() << "read content: " << buffer->begin() << "at " << t.to_string(false);
 	}
 
 	void HttpServer::onConnection(const TcpConnection::ptr& conn)
 	{
 		if(conn)
 		{
-			
+			SONE_LOG_TRACE() << "new conn";
 		}
 	}
 

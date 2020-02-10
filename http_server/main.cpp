@@ -92,7 +92,6 @@ public:
 
 int main(void)
 {
-	
 	InetAddress addr("127.0.0.1", 8987, false);
 	eventloop loop;
 	HttpServer server(&loop, addr);

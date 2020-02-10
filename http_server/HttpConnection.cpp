@@ -27,7 +27,13 @@ namespace sone
 
 	void HttpConnection::handleRead()
 	{
-		
+		ssize_t n = input_buffer.read(_socket->getFd());
+		if(n > 0)
+			message_cb(shared_from_this(), &input_buffer, util::Timestamp());
+		else if(n == 0)
+			handleClose();
+		else
+			SONE_LOG_ERR() << "handleRead()--read() failed";
 	}
 
 	void HttpConnection::handleWrite()
@@ -37,6 +43,8 @@ namespace sone
 
 	void HttpConnection::handleClose()
 	{
-		
+		loop->removeDispatcher(_dispatcher.get());
+		if(close_cb)
+			close_cb(shared_from_this());
 	}
 }
