@@ -7,6 +7,7 @@
 #include <functional>
 #include <deque>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -72,7 +73,8 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
-	unsigned int n = -1;
-	cout << n << endl;
+	map<int, std::string> m;
+	m[1] = "s";
+	cout << m[2] << endl;
 	return 0;
 }

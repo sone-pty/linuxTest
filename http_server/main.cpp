@@ -15,6 +15,7 @@
 #include "Socket.h"
 #include "eventloop.h"
 #include "HttpServer.h"
+#include "http.h"
 
 using namespace std;
 using namespace sone;
@@ -92,10 +93,10 @@ public:
 
 int main(void)
 {
-	InetAddress addr("127.0.0.1", 8987, false);
-	eventloop loop;
-	HttpServer server(&loop, addr);
-	server.start();
-	loop.startloop();
+	// InetAddress addr("127.0.0.1", 8987, false);
+	// eventloop loop;
+	// HttpServer server(&loop, addr);
+	// server.start();
+	// loop.startloop();
 	return 0;
 }

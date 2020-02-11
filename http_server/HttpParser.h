@@ -6,7 +6,9 @@ namespace sone
 
 class HttpParser{
 public:
-	
+
+private:
+
 };
 
 } // namespace sone

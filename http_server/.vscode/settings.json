@@ -5,5 +5,9 @@
     "editor.highlightActiveIndentGuide": false,
     "editor.letterSpacing": 1,
     "editor.renderIndentGuides": false,
-    "editor.minimap.enabled": false
+	"editor.minimap.enabled": false,
+	"files.associations": {
+		"ostream": "cpp",
+		"unordered_map": "cpp"
+	}
 }
