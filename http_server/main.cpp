@@ -16,6 +16,7 @@
 #include "eventloop.h"
 #include "HttpServer.h"
 #include "http.h"
+#include "Buffer.h"
 
 using namespace std;
 using namespace sone;

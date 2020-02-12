@@ -2,7 +2,7 @@
 #define HTTPCONNECTION_H_
 
 #include "TcpConnection.h"
-#include "HttpParser.h"
+#include "http.h"
 
 namespace sone
 {
@@ -13,12 +13,15 @@ public:
 	virtual ~HttpConnection();
 	void connecionEstablished() override;
 	void connecionDestroyed() override;
+	//http
+	HttpRequest* getRequest() const { return _request.get(); }
+	void setRequest(HttpRequest* req) { _request.reset(req); }
 protected:
 	void handleRead() override;
 	void handleWrite() override;
 	void handleClose() override;
 private:
-	std::unique_ptr<HttpParser> _parser;
+	std::unique_ptr<HttpRequest> _request;
 };
 
 }

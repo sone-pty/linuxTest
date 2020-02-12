@@ -2,6 +2,7 @@
 #define BUFFER_H_
 
 #include <vector>
+#include <string>
 
 namespace sone
 {
@@ -13,16 +14,26 @@ class Buffer{
 public:
 	Buffer();
 	~Buffer();
+	//从对应fd中读取数据
 	int read(int fd);
+	//返回此buffer在内存中的首地址（不一定是数据首地址）
 	char* begin();
+	//返回此buffer数据的首地址
+	char* peek();
+	//从此buffer中的有效数据起始读取指定字节的数据，并转为string
+	std::string getDataToString(size_t n);
+	//从指定位置(pos表示距离peek()的距离)开始找到第一个出现的字符c，返回其距离peek()的长度;找不到则返回-1
+	ssize_t findChar(char c, size_t pos = 0);
 	//可能需要扩容
-	void append(char* buf, size_t len);
+	void append(const char* buf, size_t len);
 	//当前空闲部分长度
 	int freeLen() { return low + _vec.size() - high; }
 	//当前有效数据长度
 	int dataLen() { return high - low; }
 	//当前可写部分长度
 	int writeLen() { return _vec.size() - high; }
+	//当前buffer的容量
+	size_t capcity() const { return _vec.capacity();  }
 private:
 	std::vector<char> _vec;
 	int low;

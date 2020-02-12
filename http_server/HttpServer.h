@@ -13,6 +13,13 @@ namespace sone
 //工作线程数量
 const static int THREAD_NUMS = 20;
 
+//HTTP报文每一行的解析状态
+enum class http_line_state
+{
+	//行完整，行出错，行不完整
+	LINE_OK, LINE_ERROR, LINE_MORE
+};
+
 class HttpServer{
 public:
 	HttpServer(eventloop* loop, const InetAddress& listenaddr);
@@ -20,13 +27,15 @@ public:
 	eventloop* getLoop();
 	void start();
 private:
-	//accept对应的处理回调
 	void AcceptCallback();
 	void onConnection(const TcpConnection::ptr& conn);
 	void onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t);
 	void onClose(const TcpConnection::ptr& conn);
 private:
-	//主线程eventloop
+	/*解析HTTP请求*/
+	http_line_state parseLine(Buffer* buf);
+private:
+	//主线程eventloop
 	eventloop* main_loop;
 	//监听套接字
 	Socket* listen_soc;

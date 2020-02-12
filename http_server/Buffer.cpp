@@ -1,5 +1,6 @@
 #include "Buffer.h"
 #include <sys/uio.h>
+#include <algorithm>
 
 namespace sone
 {
@@ -46,7 +47,7 @@ namespace sone
 		return n;
 	}
 
-	void Buffer::append(char* buf, size_t len)
+	void Buffer::append(const char* buf, size_t len)
 	{
 		if(len == 0)
 			return;
@@ -77,4 +78,34 @@ namespace sone
 		}
 	}
 
+	char* Buffer::peek()
+	{
+		return begin() + low;
+	}
+	
+	std::string Buffer::getDataToString(size_t n)
+	{
+		char* p = peek();
+		if(n > static_cast<size_t>(dataLen()))
+			return nullptr;
+		else
+			return std::string(p, p + n);
+	}
+
+	ssize_t Buffer::findChar(char c, size_t pos)
+	{
+		char* p;
+		size_t len = static_cast<size_t>(dataLen());
+		
+		if(pos < len)
+		{
+			p = std::find(peek() + pos, peek() + len, c);
+			if(p != peek() + len)
+				return p - peek() - pos;
+			else
+				return -1;
+		}
+		else
+			return -1;
+	}
 }

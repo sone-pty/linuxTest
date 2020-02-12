@@ -67,6 +67,7 @@ enum class http_headers
 	Public,
 	Server,
 	Title,
+	Set_Cookie,
 	//实体首部
 	Location,
 	Content_Base,

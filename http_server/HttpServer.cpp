@@ -1,5 +1,4 @@
 #include "HttpServer.h"
-#include "HttpParser.h"
 #include "HttpConnection.h"
 
 namespace sone
@@ -59,7 +58,7 @@ namespace sone
 
 	void HttpServer::onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t)
 	{
-		SONE_LOG_TRACE() << "read content: " << buffer->begin() << "at " << t.to_string(false);
+		
 	}
 
 	void HttpServer::onConnection(const TcpConnection::ptr& conn)
@@ -73,5 +72,22 @@ namespace sone
 	void HttpServer::onClose(const TcpConnection::ptr& conn)
 	{
 
+	}
+
+	http_line_state HttpServer::parseLine(Buffer* buf)
+	{
+		ssize_t pos = buf->findChar('\r');
+
+		if(pos == -1)
+			return http_line_state::LINE_MORE;
+		else
+		{
+			if(pos + 1 == buf->dataLen())
+				return http_line_state::LINE_MORE;
+			else if(*(buf->peek() + pos + 1) == '\n')
+				return http_line_state::LINE_OK;
+			else
+				return http_line_state::LINE_ERROR;
+		}
 	}
 }

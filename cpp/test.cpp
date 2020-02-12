@@ -8,6 +8,7 @@
 #include <deque>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,48 +22,13 @@ struct ListNode {
 
 class te{
 public:
-	void func()
+	void func() const
 	{
 		cout << "func" << endl;
 	}
+private:
+	int i;
 };
-vector<int> printMatrix(vector<vector<int> > matrix) {
-        vector<int> res;
-
-        while(matrix.size() != 0)
-        {
-            int rows = matrix.size(), colums = matrix[0].size();
-			if(rows == 1)
-            {
-                for(auto i : matrix[0])
-                    res.push_back(i);
-                break;
-            }
-			for(int i = 0;i < colums;++i)
-            {
-                res.push_back(matrix[0][0]);
-                matrix[0].erase(matrix[0].begin());
-            }
-            for(int i = 1;i < rows;++i)
-            {
-                res.push_back(matrix[i][colums - 1]);
-                matrix[i].erase(matrix[i].begin() + colums - 1);
-            }
-            for(int i = colums - 2;i >= 0;--i)
-            {
-                res.push_back(matrix[rows - 1][i]);
-                matrix[rows - 1].erase(matrix[rows - 1].begin() + i);
-            }
-            for(int i = rows - 2;i >= 1;--i)
-            {
-                res.push_back(matrix[i][0]);
-                matrix[i].erase(matrix[i].begin());
-            }
-			matrix.erase(matrix.begin());
-			matrix.erase(matrix.begin() + rows - 1);
-        }
-        return res;
-}
 
 #define ADD(a, b) printf(#a" + "#b" = %d\n", a + b)
 int main(void)
@@ -73,8 +39,5 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
-	map<int, std::string> m;
-	m[1] = "s";
-	cout << m[2] << endl;
 	return 0;
 }
