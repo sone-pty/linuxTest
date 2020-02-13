@@ -55,7 +55,8 @@ private:
 class parent : public std::enable_shared_from_this<parent>
 {
 public:
-	parent(obj& o)
+	typedef std::shared_ptr<parent> ptr;
+	parent(obj &o)
 	{
 		o.setF(bind(&parent::func, this));
 	}
@@ -76,7 +77,8 @@ void way(shared_ptr<parent> ptr)
 
 class child : public parent{
 public:
-	child(obj& o):parent(o)
+	typedef std::shared_ptr<child> ptr;
+	child(obj &o) : parent(o)
 	{
 
 	}
@@ -94,10 +96,10 @@ public:
 
 int main(void)
 {
-	// InetAddress addr("127.0.0.1", 8987, false);
-	// eventloop loop;
-	// HttpServer server(&loop, addr);
-	// server.start();
-	// loop.startloop();
+	InetAddress addr("127.0.0.1", 8987, false);
+	eventloop loop;
+	HttpServer server(&loop, addr);
+	server.start();
+	loop.startloop();
 	return 0;
 }

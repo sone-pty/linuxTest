@@ -81,8 +81,25 @@ enum class http_headers
 	Last_Modified
 };
 
+//HTTP报文每一行的解析状态
+enum class http_line_state
+{
+	//行完整，行出错，行不完整
+	LINE_OK, LINE_ERROR, LINE_MORE
+};
+
+//HTTP解析请求的状态
+enum class req_check_state
+{
+	CHECK_REQUESTLINE,
+	CHECK_HEADER,
+	CHECK_CONTENT
+};
+
 std::string ConvertHeaderToString(http_headers header);
 http_headers ConvertStringToHeader(const std::string& s);
+std::string ConvertMethodToString(http_method method);
+http_method ConvertStringToMethod(const std::string &s);
 
 struct CaseInsensitiveLess : public std::binary_function<std::string, std::string, bool>
 {

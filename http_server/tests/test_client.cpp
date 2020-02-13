@@ -11,6 +11,7 @@ int main(void)
 	s.bindAddr(addr);
 	s.connect(seraddr);
 	sleep(1);
-	write(s.getFd(), "hello", 6);
+	char* str = "GET /home/p HTTP/1.1\r";
+	write(s.getFd(), str, strlen(str));
 	return 0;
 }

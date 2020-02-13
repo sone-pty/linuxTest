@@ -2,6 +2,17 @@
 
 namespace sone
 {
+	static std::map<std::string, http_method, CaseInsensitiveLess> METHODS = 
+	{
+		{ "GET", http_method::GET },
+		{ "POST", http_method::POST },
+		{ "HEAD", http_method::HEAD },
+		{ "PUT", http_method::PUT },
+		{ "TRACE", http_method::TRACE },
+		{ "OPTIONS", http_method::OPTIONS },
+		{ "DELETE", http_method::DELETE }
+	};
+
 	static std::map<std::string, http_headers, CaseInsensitiveLess>  HEADERS = 
 	{
 		#define X(s) \
@@ -42,6 +53,40 @@ namespace sone
 		#undef X
 			{ "Last-Modified", http_headers::Last_Modified }
 	};
+
+	std::string ConvertMethodToString(http_method method)
+	{
+		std::string res;
+		switch(method)
+		{
+			case http_method::GET:
+				res = "GET";break;
+			case http_method::DELETE:
+				res = "DELETE";break;
+			case http_method::HEAD:
+				res = "HEAD";break;
+			case http_method::OPTIONS:
+				res = "OPTIONS";break;
+			case http_method::POST:
+				res = "POST";break;
+			case http_method::PUT:
+				res = "PUT";break;
+			case http_method::TRACE:
+				res = "TRACE";break;
+			default:
+				res = "UNKNOW";break;
+		}
+
+		return res;
+	}
+
+	http_method ConvertStringToMethod(const std::string& s)
+	{
+		if(METHODS.find(s) == METHODS.end())
+			return http_method::UNKNOW;
+		else
+			return METHODS[s];
+	}
 
 	std::string ConvertHeaderToString(http_headers header)
 	{

@@ -20,8 +20,8 @@ public:
 	char* begin();
 	//返回此buffer数据的首地址
 	char* peek();
-	//从此buffer中的有效数据起始读取指定字节的数据，并转为string
-	std::string getDataToString(size_t n);
+	//从此buffer中的指定位置（默认从peek开始）读取指定字节的数据，并转为string
+	std::string getDataToString(size_t n, size_t pos = 0);
 	//从指定位置(pos表示距离peek()的距离)开始找到第一个出现的字符c，返回其距离peek()的长度;找不到则返回-1
 	ssize_t findChar(char c, size_t pos = 0);
 	//可能需要扩容

@@ -83,10 +83,10 @@ namespace sone
 		return begin() + low;
 	}
 	
-	std::string Buffer::getDataToString(size_t n)
+	std::string Buffer::getDataToString(size_t n, size_t pos)
 	{
-		char* p = peek();
-		if(n > static_cast<size_t>(dataLen()))
+		char* p = peek() + pos;
+		if(n > static_cast<size_t>(dataLen() - pos))
 			return nullptr;
 		else
 			return std::string(p, p + n);

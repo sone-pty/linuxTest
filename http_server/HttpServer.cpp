@@ -1,5 +1,6 @@
 #include "HttpServer.h"
 #include "HttpConnection.h"
+#include <memory>
 
 namespace sone
 {
@@ -58,7 +59,37 @@ namespace sone
 
 	void HttpServer::onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t)
 	{
+		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+		req_check_state req_state = http_conn->getReqstate();
+		http_line_state line_state;
+
+		if(!http_conn->getRequest())
+			http_conn->setRequest(new HttpRequest());
 		
+		while((line_state = parseLine(buffer)) == http_line_state::LINE_OK || req_state == req_check_state::CHECK_CONTENT)
+		{
+			switch(req_state)
+			{
+				case req_check_state::CHECK_REQUESTLINE:
+					{
+						if(!parseRequestLine(buffer, conn))
+						{
+							//返回错误页面并关闭连接
+							return;
+						}
+						break;
+					}
+				case req_check_state::CHECK_HEADER:
+					break;
+				case req_check_state::CHECK_CONTENT:
+					break;
+			}
+		}
+
+		if(line_state == http_line_state::LINE_ERROR)
+		{
+			//返回错误页面并关闭连接
+		}
 	}
 
 	void HttpServer::onConnection(const TcpConnection::ptr& conn)
@@ -71,7 +102,45 @@ namespace sone
 
 	void HttpServer::onClose(const TcpConnection::ptr& conn)
 	{
+		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+	}
 
+	bool HttpServer::parseRequestLine(Buffer* buf, const TcpConnection::ptr& conn)
+	{
+		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+		HttpRequest* req = http_conn->getRequest();
+		http_method method;
+		ssize_t first_space, second_space, end;
+
+		first_space = buf->findChar(' ');
+		end = buf->findChar('\r');
+		
+		if(first_space < 0)
+			return false;
+		else
+		{
+			if((method = ConvertStringToMethod(buf->getDataToString(first_space))) == http_method::UNKNOW)
+				return false;
+			else
+				req->setMethod(method);
+		}
+
+		second_space = buf->findChar(' ', first_space + 1);
+
+		if(second_space < 0)
+			return false;
+		else
+			req->setRequestUrl(buf->getDataToString(second_space - first_space - 1, first_space + 1));
+		
+		char* c = buf->peek() + end - 1;
+		if(*c == '1')
+			req->setVersion(http_version::HTTP11);
+		else if(*c == '0' && *(c - 2) == '1')
+			req->setVersion(http_version::HTTP10);
+		else
+			return false;
+
+		return true;
 	}
 
 	http_line_state HttpServer::parseLine(Buffer* buf)
