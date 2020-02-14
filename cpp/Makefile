@@ -3,7 +3,7 @@ server:chatServer.cpp
 client:chatClient.cpp
 	g++ chatClient.cpp -g -o client
 test:test.cpp
-	g++ test.cpp -g -o test
+	g++ test.cpp -g -lboost_locale -o test
 clear:
 	rm -f server
 	rm -f client

@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <boost/locale.hpp>
 
 using namespace std;
 
@@ -39,5 +40,8 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
+	char str[] = "我";
+	for(auto c : str)
+		printf("%X ", c);
 	return 0;
 }

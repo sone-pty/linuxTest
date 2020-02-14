@@ -14,6 +14,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <functional>
+#include <algorithm>
 
 #define BYTE_NUMS 8
 #define BUFFSIZE 4096
@@ -33,6 +35,8 @@ int byteorder();
 pid_t getTid();
 //通过fd解析地址
 struct sockaddr_in getAddrbyFdV4(int fd);
+//URL解码
+std::string URLDecode(const std::string& s);
 
 //时间戳类(us级别)
 class Timestamp{

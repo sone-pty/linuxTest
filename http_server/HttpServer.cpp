@@ -60,7 +60,7 @@ namespace sone
 	void HttpServer::onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t)
 	{
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
-		req_check_state req_state = http_conn->getReqstate();
+		req_check_state req_state;
 		http_line_state line_state;
 
 		if(!http_conn->getRequest())
@@ -68,6 +68,7 @@ namespace sone
 		
 		while((line_state = parseLine(buffer)) == http_line_state::LINE_OK || req_state == req_check_state::CHECK_CONTENT)
 		{
+			req_state = http_conn->getReqstate();
 			switch(req_state)
 			{
 				case req_check_state::CHECK_REQUESTLINE:
@@ -80,7 +81,14 @@ namespace sone
 						break;
 					}
 				case req_check_state::CHECK_HEADER:
-					break;
+					{
+						if(!parseHeaderLine(buffer, conn))
+						{
+							//返回错误页面并关闭连接
+							return;
+						}
+						break;
+					}
 				case req_check_state::CHECK_CONTENT:
 					break;
 			}
@@ -103,6 +111,31 @@ namespace sone
 	void HttpServer::onClose(const TcpConnection::ptr& conn)
 	{
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+	}
+
+	bool HttpServer::parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn)
+	{
+		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+		HttpRequest* req = http_conn->getRequest();
+		ssize_t index, end;
+		std::string key, val;
+		http_headers header;
+
+		index = buf->findChar(':');
+		end = buf->findChar('\r');
+
+		if(index < 0)
+			return false;
+		else
+		{
+			key = buf->getDataToString(index);
+			if((header = ConvertStringToHeader(key)) == http_headers::UNKNOW)
+				return false;
+			else
+			{
+				
+			}
+		}
 	}
 
 	bool HttpServer::parseRequestLine(Buffer* buf, const TcpConnection::ptr& conn)
@@ -130,7 +163,18 @@ namespace sone
 		if(second_space < 0)
 			return false;
 		else
-			req->setRequestUrl(buf->getDataToString(second_space - first_space - 1, first_space + 1));
+		{
+			//需要确定有没有请求参数
+			ssize_t index = buf->findChar('?', first_space + 1);
+			if(index < 0)
+				req->setRequestUrl(util::URLDecode(buf->getDataToString(second_space - first_space - 1, first_space + 1)));
+			else
+			{
+				req->setRequestUrl(util::URLDecode(buf->getDataToString(index - first_space - 1, first_space + 1)));
+				//解析参数
+				
+			}
+		}
 		
 		char* c = buf->peek() + end - 1;
 		if(*c == '1')
@@ -140,6 +184,10 @@ namespace sone
 		else
 			return false;
 
+		//如果解析成功，将buf中low后移
+		buf->moveLow(end + 2);
+		//改变解析状态
+		http_conn->setReqstate(req_check_state::CHECK_HEADER);
 		return true;
 	}
 

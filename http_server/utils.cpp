@@ -41,6 +41,53 @@ namespace util
 		return addr;
 	}
 
+	static std::map<char, int> HEXMAP =
+	{
+		{ '1', 1 },
+		{ '2', 2 },
+		{ '3', 3 },
+		{ '4', 4 },
+		{ '5', 5 },
+		{ '6', 6 },
+		{ '7', 7 },
+		{ '8', 8 },
+		{ '9', 9 },
+		{ 'a', 10 },
+		{ 'b', 11 },
+		{ 'c', 12 },
+		{ 'd', 13 },
+		{ 'e', 14 },
+		{ 'f', 15 },
+		{ 'A', 10 },
+		{ 'B', 11 },
+		{ 'C', 12 },
+		{ 'D', 13 },
+		{ 'E', 14 },
+		{ 'F', 15 },
+	};
+
+	std::string URLDecode(const std::string& s)
+	{
+		std::vector<char> res;
+		res.reserve(s.size());
+
+		for (int i = 0; i < (int)s.size();)
+		{
+			if(s[i] != '%')
+				res.push_back(s[i++]);
+			else if(i + 2 >= (int)s.size())
+				return nullptr;
+			else
+			{
+				int n = HEXMAP[s[i + 1]] * 16 + HEXMAP[s[i + 2]];
+				res.push_back(n);
+				i += 3;
+			}
+		}
+
+		return (&(*res.begin()));
+	}
+
 	/*Timestamp*/
 	Timestamp::Timestamp()
 	{

@@ -108,4 +108,13 @@ namespace sone
 		else
 			return -1;
 	}
+
+	bool Buffer::moveLow(size_t n)
+	{
+		if(n + low > high)
+			return false;
+		else
+			low += n;
+		return true;
+	}
 }

@@ -15,7 +15,7 @@
                             "-g",
                             "${fileDirname}/*.cpp",
                             "-lpthread",
-                            //"-lboost_regex",
+                            //"-lboost_locale",
                             //"-D NDEBUG",
                             "-o",
                             //"${fileDirname}/${fileBasenameNoExtension}",

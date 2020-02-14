@@ -24,6 +24,8 @@ public:
 	std::string getDataToString(size_t n, size_t pos = 0);
 	//从指定位置(pos表示距离peek()的距离)开始找到第一个出现的字符c，返回其距离peek()的长度;找不到则返回-1
 	ssize_t findChar(char c, size_t pos = 0);
+	//从此buffer中读取出n个字节（将low后移）
+	bool moveLow(size_t n);
 	//可能需要扩容
 	void append(const char* buf, size_t len);
 	//当前空闲部分长度
