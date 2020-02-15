@@ -101,7 +101,7 @@ namespace sone
 		{
 			p = std::find(peek() + pos, peek() + len, c);
 			if(p != peek() + len)
-				return p - peek() - pos;
+				return p - peek();
 			else
 				return -1;
 		}

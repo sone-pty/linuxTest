@@ -133,7 +133,7 @@ namespace sone
 				return false;
 			else
 			{
-				
+				return true;
 			}
 		}
 	}
@@ -171,8 +171,25 @@ namespace sone
 			else
 			{
 				req->setRequestUrl(util::URLDecode(buf->getDataToString(index - first_space - 1, first_space + 1)));
-				//解析参数
-				
+				//解析参数，需要先解析后解码
+				std::string params = buf->getDataToString(second_space - index - 1, index + 1), temp;
+				size_t split = 0, lastsplit = -1, eq = 0;
+
+				while((split = params.find('&', lastsplit + 1)) != std::string::npos)
+				{
+					temp = params.substr(lastsplit + 1, split - lastsplit - 1);
+					if((eq = temp.find('=')) != std::string::npos)
+						req->setParam(util::URLDecode(temp.substr(0, eq)), util::URLDecode(temp.substr(eq + 1, temp.length() - eq - 1)));
+					else
+						return false;
+					lastsplit = split;
+				}
+				//最后一对参数
+				temp = params.substr(lastsplit + 1);
+				if((eq = temp.find('=')) != std::string::npos)
+					req->setParam(util::URLDecode(temp.substr(0, eq)), util::URLDecode(temp.substr(eq + 1, temp.length() - eq - 1)));
+				else
+					return false;
 			}
 		}
 		
