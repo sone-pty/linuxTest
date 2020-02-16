@@ -40,8 +40,7 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
-	char str[] = "我";
-	for(auto c : str)
-		printf("%X ", c);
+	string s = "我";
+	cout << s[0] << s[1] << s[2] << endl;
 	return 0;
 }

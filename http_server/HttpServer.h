@@ -30,6 +30,7 @@ private:
 	http_line_state parseLine(Buffer* buf);
 	bool parseRequestLine(Buffer* buf, const TcpConnection::ptr& conn);
 	bool parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn);
+	bool parseContent(Buffer* buf, const TcpConnection::ptr& conn);
 private:
 	//主线程eventloop
 	eventloop* main_loop;

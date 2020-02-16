@@ -138,6 +138,8 @@ public:
 	void setCookie(const std::string& key, const std::string& val);
 	std::string getHeader(const std::string& header);
 	bool setHeader(const std::string& key, const std::string& val);
+	std::string getContent();
+	void setContent(const std::string& content);
 private:
 	//请求方法
 	http_method req_func;
@@ -153,6 +155,8 @@ private:
 	std::string _url;
 	//版本号
 	http_version _version;
+	//报文实体
+	std::string _content;
 };
 
 }

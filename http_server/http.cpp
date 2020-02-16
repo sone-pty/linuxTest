@@ -225,6 +225,11 @@ namespace sone
 			return _headers[iter->first];
 	}
 
+	std::string HttpRequest::getContent()
+	{
+		return _content;
+	}
+
 	bool HttpRequest::setHeader(const std::string& key, const std::string& val)
 	{
 		auto iter = HEADERS.find(key);
@@ -267,4 +272,8 @@ namespace sone
 		_cookies[key] = val;
 	}
 
+	void HttpRequest::setContent(const std::string& content)
+	{
+		_content = content;
+	}
 }

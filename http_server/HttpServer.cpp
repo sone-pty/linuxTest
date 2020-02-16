@@ -66,9 +66,9 @@ namespace sone
 		if(!http_conn->getRequest())
 			http_conn->setRequest(new HttpRequest());
 		
-		while((line_state = parseLine(buffer)) == http_line_state::LINE_OK || req_state == req_check_state::CHECK_CONTENT)
+		while((req_state = http_conn->getReqstate()) == req_check_state::CHECK_CONTENT || (line_state = parseLine(buffer)) == http_line_state::LINE_OK)
 		{
-			req_state = http_conn->getReqstate();
+			//req_state = http_conn->getReqstate();
 			switch(req_state)
 			{
 				case req_check_state::CHECK_REQUESTLINE:
@@ -90,6 +90,11 @@ namespace sone
 						break;
 					}
 				case req_check_state::CHECK_CONTENT:
+					if(!parseContent(buffer, conn))
+					{
+						//返回错误页面并关闭连接
+						return;
+					}
 					break;
 			}
 		}
@@ -98,6 +103,9 @@ namespace sone
 		{
 			//返回错误页面并关闭连接
 		}
+
+		//解析请求成功
+		SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
 	}
 
 	void HttpServer::onConnection(const TcpConnection::ptr& conn)
@@ -113,6 +121,17 @@ namespace sone
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
 	}
 
+	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)
+	{
+		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+		HttpRequest* req = http_conn->getRequest();
+		req->setContent(buf->getDataToString(buf->dataLen()));
+		buf->moveLow(buf->dataLen());
+		//以防keep-alive，重置解析状态
+		http_conn->setReqstate(req_check_state::CHECK_REQUESTLINE);
+		return true;
+	}
+
 	bool HttpServer::parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn)
 	{
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
@@ -125,7 +144,17 @@ namespace sone
 		end = buf->findChar('\r');
 
 		if(index < 0)
-			return false;
+		{
+			//空行
+			if(end == 0)
+			{
+				http_conn->setReqstate(req_check_state::CHECK_CONTENT);
+				buf->moveLow(2);
+				return true;
+			}
+			else
+				return false;
+		}
 		else
 		{
 			key = buf->getDataToString(index);
@@ -133,6 +162,11 @@ namespace sone
 				return false;
 			else
 			{
+				val = buf->getDataToString(end - index - 1, index + 1);
+				if(val[0] == ' ')
+					val.erase(val.begin());
+				req->setHeader(ConvertHeaderToString(header), val);
+				buf->moveLow(end + 2);
 				return true;
 			}
 		}
