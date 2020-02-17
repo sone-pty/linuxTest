@@ -1,4 +1,5 @@
 #include <iostream>
+#include <signal.h>
 #include "Log.h"
 #include "mutex.h"
 #include "condition.h"
@@ -17,7 +18,6 @@
 #include "HttpServer.h"
 #include "http.h"
 #include "Buffer.h"
-#include <boost/locale.hpp>
 
 using namespace std;
 using namespace sone;
@@ -37,66 +37,18 @@ void dynamic_arg_func(const char* fmt, ...)
 	va_end(vl);
 }
 */
-class obj{
-public:
-	void setF(function<void()> f)
-	{
-		this->f = move(f);
-	}
 
-	void execute()
-	{
-		f();
-	}
-
-private:
-	function<void()> f;
-};
-
-class parent : public std::enable_shared_from_this<parent>
-{
-public:
-	typedef std::shared_ptr<parent> ptr;
-	parent(obj &o)
-	{
-		o.setF(bind(&parent::func, this));
-	}
-	virtual void func()
-	{
-		cout << "parent::func" << endl;
-	}
-	virtual void func2()
-	{
-		cout << "parent::func2" << endl;
-	}
-};
-
-void way(shared_ptr<parent> ptr)
-{
-	ptr->func2();
-}
-
-class child : public parent{
-public:
-	typedef std::shared_ptr<child> ptr;
-	child(obj &o) : parent(o)
-	{
-
-	}
-	void func()
-	{
-		cout << "child::func" << endl;
-		way(shared_from_this());
-	}
-
-	void func2()
-	{
-		cout << "child::func2" << endl;
-	}
-};
+void handle_pipe(int sig) {}
 
 int main(void)
 {
+	//忽视SIGPIPE
+	struct sigaction sa;
+    sa.sa_handler = handle_pipe;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGPIPE, &sa, NULL);
+
 	InetAddress addr("127.0.0.1", 8987, false);
 	eventloop loop;
 	HttpServer server(&loop, addr);

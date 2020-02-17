@@ -31,7 +31,9 @@ namespace sone
 	void HttpServer::AcceptCallback()
 	{
 		InetAddress addr;
-		int connfd = listen_soc->accept(&addr);
+		int connfd;
+		while((connfd = listen_soc->accept(&addr)) < 0 && errno == EINTR);
+		
 		if(connfd >= 0)
 		{
 			eventloop* ioLoop = _threadpool->getLoop(connfd);
@@ -65,8 +67,9 @@ namespace sone
 
 		if(!http_conn->getRequest())
 			http_conn->setRequest(new HttpRequest());
-		
-		while((req_state = http_conn->getReqstate()) == req_check_state::CHECK_CONTENT || (line_state = parseLine(buffer)) == http_line_state::LINE_OK)
+
+		SONE_LOG_ROOT() << buffer->getDataToString(buffer->dataLen());
+		while ((req_state = http_conn->getReqstate()) == req_check_state::CHECK_CONTENT || (line_state = parseLine(buffer)) == http_line_state::LINE_OK)
 		{
 			//req_state = http_conn->getReqstate();
 			switch(req_state)
@@ -118,7 +121,9 @@ namespace sone
 
 	void HttpServer::onClose(const TcpConnection::ptr& conn)
 	{
-		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+		int nums = connections.erase(conn->getSockfd());
+		if(nums == 0)
+			SONE_LOG_ERR() << "HttpServer::onClose()-----connections.erase()失败";
 	}
 
 	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)
@@ -140,9 +145,9 @@ namespace sone
 		std::string key, val;
 		http_headers header;
 
-		index = buf->findChar(':');
 		end = buf->findChar('\r');
-
+		index = buf->findChar(':', 0, end);
+		
 		if(index < 0)
 		{
 			//空行
@@ -179,8 +184,8 @@ namespace sone
 		http_method method;
 		ssize_t first_space, second_space, end;
 
-		first_space = buf->findChar(' ');
 		end = buf->findChar('\r');
+		first_space = buf->findChar(' ', 0, end);
 		
 		if(first_space < 0)
 			return false;
@@ -192,14 +197,14 @@ namespace sone
 				req->setMethod(method);
 		}
 
-		second_space = buf->findChar(' ', first_space + 1);
+		second_space = buf->findChar(' ', first_space + 1, end);
 
 		if(second_space < 0)
 			return false;
 		else
 		{
 			//需要确定有没有请求参数
-			ssize_t index = buf->findChar('?', first_space + 1);
+			ssize_t index = buf->findChar('?', first_space + 1, end);
 			if(index < 0)
 				req->setRequestUrl(util::URLDecode(buf->getDataToString(second_space - first_space - 1, first_space + 1)));
 			else

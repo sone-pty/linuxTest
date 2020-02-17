@@ -25,6 +25,7 @@ public:
     void setMessageCallback(MessageCallback cb) { message_cb = std::move(cb);  }
 	virtual void connecionEstablished() = 0;
 	virtual void connecionDestroyed() = 0;
+	int getSockfd() { return _socket->getFd(); }
 protected:
 	virtual void handleRead() = 0;
 	virtual void handleWrite() = 0;

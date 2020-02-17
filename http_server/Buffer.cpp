@@ -109,6 +109,18 @@ namespace sone
 			return -1;
 	}
 
+	ssize_t Buffer::findChar(char c, size_t begin, size_t end)
+	{
+		//assert(begin >= 0 && end <= dataLen() && begin < end);
+		if (begin >= end || begin < 0 || end > dataLen())
+			return -1;
+		char *p = std::find(peek() + begin, peek() + end, c);
+		if(p != peek() + end)
+			return p - peek();
+		else
+			return -1;
+	}
+
 	bool Buffer::moveLow(size_t n)
 	{
 		if(n + low > high)
