@@ -5,6 +5,7 @@
 #include <string>
 #include <strings.h>
 #include <functional>
+#include <memory>
 
 namespace sone
 {
@@ -81,6 +82,19 @@ enum class http_headers
 	Last_Modified
 };
 
+//响应状态码
+enum class http_resp_state
+{
+	UNKNOW = 1,
+	Continue = 100,
+	OK = 200,
+	Not_Found = 404,
+	Bad_Request = 400,
+	Forbidden = 403,
+	Internal_Server_Error = 500,
+	HTTP_Version_Not_Supported = 505
+};
+
 //HTTP报文每一行的解析状态
 enum class http_line_state
 {
@@ -99,7 +113,8 @@ enum class req_check_state
 std::string ConvertHeaderToString(http_headers header);
 http_headers ConvertStringToHeader(const std::string& s);
 std::string ConvertMethodToString(http_method method);
-http_method ConvertStringToMethod(const std::string &s);
+http_method ConvertStringToMethod(const std::string& s);
+std::string ConvertRespStateToString(http_resp_state state);
 
 struct CaseInsensitiveLess : public std::binary_function<std::string, std::string, bool>
 {
@@ -150,7 +165,7 @@ private:
 	//请求参数
 	Map _params;
 	//cookies
-	Map _cookies;
+	std::map<std::string, std::string> _cookies;
 	//请求URL
 	std::string _url;
 	//版本号
@@ -158,6 +173,38 @@ private:
 	//报文实体
 	std::string _content;
 };
+
+class HttpResponse{
+public:
+	typedef std::map<std::string, std::string, CaseInsensitiveLess> Map;
+
+	HttpResponse();
+	~HttpResponse();
+	http_resp_state getRestState();
+	void setRespState(http_resp_state state);
+	http_version getVersion();
+	void setVersion(http_version version);
+	std::string getHeader(const std::string& header);
+	bool setHeader(const std::string& key, const std::string& val);
+	std::string getCookie(const std::string& key);
+	void setCookie(const std::string& key, const std::string& val);
+	std::string getContent();
+	void setContent(const std::string& content);
+	//需要确保响应报文中填充的各个部分符合规则以及主体需要被编码的情况下调用
+	std::string toString();
+private:
+	//响应码
+	http_resp_state _state;
+	//版本
+	http_version _version;
+	//首部
+	Map _headers;
+	//set-cookies
+	std::map<std::string, std::string> _cookies;
+	//主体
+	std::string _content;
+};
+
 
 }
 

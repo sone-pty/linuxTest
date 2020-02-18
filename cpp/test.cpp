@@ -23,13 +23,31 @@ struct ListNode {
 
 class te{
 public:
-	void func() const
+	te() 
 	{
-		cout << "func" << endl;
+		cout << "construct te" << endl;
+	}
+	~te()
+	{
+		cout << "delete te" << endl;
 	}
 private:
 	int i;
 };
+
+unique_ptr<string> ptr(new string("sdsd"));
+
+unique_ptr<string> func()
+{
+	return move(ptr);
+}
+
+void printChar(string s)
+{
+	for(auto c : s)
+		printf("%X ", c);
+	printf("\n");
+}
 
 #define ADD(a, b) printf(#a" + "#b" = %d\n", a + b)
 int main(void)
@@ -40,7 +58,9 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
-	string s = "我";
-	cout << s[0] << s[1] << s[2] << endl;
+	string s1 = "你好";
+	printChar(s1);
+	string s2 = boost::locale::conv::from_utf(s1.c_str(), "gbk");
+	printChar(s2);
 	return 0;
 }

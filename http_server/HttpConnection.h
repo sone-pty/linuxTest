@@ -18,7 +18,8 @@ public:
 	HttpRequest* getRequest() const { return _request.get(); }
 	void setRequest(HttpRequest* req) { _request.reset(req); }
 	req_check_state getReqstate() const { return _state;  }
-	void setReqstate(req_check_state state) { _state = state;  }
+	void setReqstate(req_check_state state) { _state = state; }
+	void send(Buffer* buf);
 protected:
 	void handleRead() override;
 	void handleWrite() override;
@@ -29,6 +30,7 @@ private:
 	//请求解析状态
 	req_check_state _state = req_check_state::CHECK_REQUESTLINE;
 };
+
 }
 
 #endif

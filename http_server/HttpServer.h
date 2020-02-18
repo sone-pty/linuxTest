@@ -31,6 +31,8 @@ private:
 	bool parseRequestLine(Buffer* buf, const TcpConnection::ptr& conn);
 	bool parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn);
 	bool parseContent(Buffer* buf, const TcpConnection::ptr& conn);
+	//构造响应
+	void createResponse(HttpResponse& resp, HttpRequest* req);
 private:
 	//主线程eventloop
 	eventloop* main_loop;

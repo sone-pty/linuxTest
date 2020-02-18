@@ -47,4 +47,9 @@ namespace sone
 		if(close_cb)
 			close_cb(shared_from_this());
 	}
+
+	void HttpConnection::send(Buffer* buf)
+	{
+		
+	}
 }

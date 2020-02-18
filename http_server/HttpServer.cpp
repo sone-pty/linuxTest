@@ -1,6 +1,7 @@
 #include "HttpServer.h"
 #include "HttpConnection.h"
 #include <memory>
+#include "consts.h"
 
 namespace sone
 {
@@ -93,12 +94,14 @@ namespace sone
 						break;
 					}
 				case req_check_state::CHECK_CONTENT:
-					if(!parseContent(buffer, conn))
 					{
-						//返回错误页面并关闭连接
-						return;
+						if(!parseContent(buffer, conn))
+						{
+							//返回错误页面并关闭连接
+							return;
+						}
+						break;
 					}
-					break;
 			}
 		}
 
@@ -109,6 +112,13 @@ namespace sone
 
 		//解析请求成功
 		SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
+		
+		HttpResponse resp;
+		createResponse(resp, http_conn->getRequest());
+		Buffer buf;
+		std::string message = std::move(resp.toString());
+		buf.append(message.c_str(), message.length());
+		http_conn->send(&buf);
 	}
 
 	void HttpServer::onConnection(const TcpConnection::ptr& conn)
@@ -124,6 +134,18 @@ namespace sone
 		int nums = connections.erase(conn->getSockfd());
 		if(nums == 0)
 			SONE_LOG_ERR() << "HttpServer::onClose()-----connections.erase()失败";
+	}
+
+	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req)
+	{
+		resp.setVersion(req->getVersion());
+		resp.setHeader("Content-Type", "text/html;charset=utf-8");
+		resp.setHeader("Server", SERVER_VERSION);
+		//resp.setHeader("Date", util::Timestamp().to_string(false));
+		std::string request_url = std::move(req->getRequestUrl());
+		std::string complete_url(WEB_ROOT);
+		complete_url.append(request_url);
+		
 	}
 
 	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)

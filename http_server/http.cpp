@@ -2,6 +2,17 @@
 
 namespace sone
 {
+	static std::map<int, std::string> RESPSTATES =
+	{
+		{ 100, "CONTINUE" },
+		{ 200, "OK" },
+		{ 400, "Bad Request" },
+		{ 403, "Forbidden" },
+		{ 404, "Not Found" },
+		{ 500, "Internal Server Error" },
+		{ 505, "HTTP_Version_Not_Supported" }
+	};
+
 	static std::map<std::string, http_method, CaseInsensitiveLess> METHODS = 
 	{
 		{ "GET", http_method::GET },
@@ -53,6 +64,32 @@ namespace sone
 		#undef X
 			{ "Last-Modified", http_headers::Last_Modified }
 	};
+
+	std::string ConvertRespStateToString(http_resp_state state)
+	{
+		std::string res;
+		switch(state)
+		{
+			case http_resp_state::UNKNOW:
+				res = "UNKNOW";break;
+			case http_resp_state::OK:
+				res = "OK";break;
+			case http_resp_state::Bad_Request:
+				res = "Bad Request";break;
+			case http_resp_state::Continue:
+				res = "Continue";break;
+			case http_resp_state::Forbidden:
+				res = "Forbidden";break;
+			case http_resp_state::HTTP_Version_Not_Supported:
+				res = "HTTP Version Not Supported";break;
+			case http_resp_state::Internal_Server_Error:
+				res = "Internal Server Error";break;
+			case http_resp_state::Not_Found:
+				res = "Not Found";break;
+		}
+
+		return res;
+	}
 
 	std::string ConvertMethodToString(http_method method)
 	{
@@ -275,5 +312,80 @@ namespace sone
 	void HttpRequest::setContent(const std::string& content)
 	{
 		_content = content;
+	}
+
+	/* HttpResponse */
+	HttpResponse::HttpResponse()
+		:_state(http_resp_state::UNKNOW), _version(http_version::UNKNOW) {}
+
+	HttpResponse::~HttpResponse() {}
+
+	void HttpResponse::setCookie(const std::string& key, const std::string& val)
+	{
+		_cookies[key] = val;
+	}
+
+	void HttpResponse::setContent(const std::string& content)
+	{
+		_content = content;
+	}
+
+	bool HttpResponse::setHeader(const std::string& key, const std::string& val)
+	{
+		auto iter = HEADERS.find(key);
+		if(iter == HEADERS.end())
+			return false;
+		else
+		{
+			_headers[ConvertHeaderToString(iter->second)] = val;
+			return true;
+		}
+	}
+
+	void HttpResponse::setVersion(http_version ver)
+	{
+		_version = ver;
+	}
+
+	std::string HttpResponse::getCookie(const std::string& key)
+	{
+		return _cookies[key];
+	}
+
+	std::string HttpResponse::getHeader(const std::string& header)
+	{
+		auto iter = HEADERS.find(header);
+		if(iter == HEADERS.end())
+			return "UNKNOW";
+		else
+			return _headers[iter->first];
+	}
+
+	std::string HttpResponse::getContent()
+	{
+		return _content;
+	}
+	
+	http_version HttpResponse::getVersion()
+	{
+		return _version;
+	}
+
+	std::string HttpResponse::toString()
+	{
+		std::string res;
+		res.reserve(512);
+		//状态行
+		if(_version == http_version::HTTP10)
+			res.append("HTTP/1.0 200 OK\r\n");
+		else if(_version == http_version::HTTP11)
+			res.append("HTTP/1.1 200 OK\r\n");
+		//首部
+		for(auto iter = _headers.begin();iter != _headers.end();++iter)
+			res.append(iter->first + ": " + iter->second + "\r\n");
+		//主体
+		res.append("\r\n" + _content);
+
+		return res;
 	}
 }
