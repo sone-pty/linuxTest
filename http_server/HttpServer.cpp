@@ -2,6 +2,9 @@
 #include "HttpConnection.h"
 #include <memory>
 #include "consts.h"
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 namespace sone
 {
@@ -138,6 +141,7 @@ namespace sone
 
 	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req)
 	{
+		char buf[BUFSIZE];
 		resp.setVersion(req->getVersion());
 		resp.setHeader("Content-Type", "text/html;charset=utf-8");
 		resp.setHeader("Server", SERVER_VERSION);
@@ -146,6 +150,25 @@ namespace sone
 		std::string complete_url(WEB_ROOT);
 		complete_url.append(request_url);
 		
+		int fd = ::open(complete_url.c_str(), O_RDONLY);
+		if(fd == -1)
+		{
+			SONE_LOG_ERR() << "createResponse---open() failed";
+			if(errno == EACCES)
+				resp.setRespState(http_resp_state::Not_Found);
+			else
+				resp.setRespState(http_resp_state::Internal_Server_Error);
+		}
+		else
+		{
+			std::string s;
+			s.reserve(BUFSIZE);
+			ssize_t len;
+			while((len = ::read(fd, buf, BUFSIZE)) != 0)
+				s.append(buf, buf + len);
+			resp.setContent(std::move(s));
+		}
+		resp.setRespState(http_resp_state::OK);
 	}
 
 	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)

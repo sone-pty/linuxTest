@@ -12,7 +12,7 @@ namespace sone
 {
 
 //工作线程数量
-const static int THREAD_NUMS = 20;
+const static int THREAD_NUMS = 8;
 
 class HttpServer{
 public:

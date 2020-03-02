@@ -63,6 +63,10 @@ enum class http_headers
 	Accept_Language,
 	Authorization,
 	Cookie,
+	Upgrade_Insecure_Requests,
+	Sec_Fetch_User,
+	Sec_Fetch_Site,
+	Sec_Fetch_Mode,
 	//响应首部
 	Age,
 	Public,
@@ -190,6 +194,7 @@ public:
 	void setCookie(const std::string& key, const std::string& val);
 	std::string getContent();
 	void setContent(const std::string& content);
+	void setContent(const std::string&& content);
 	//需要确保响应报文中填充的各个部分符合规则以及主体需要被编码的情况下调用
 	std::string toString();
 private:

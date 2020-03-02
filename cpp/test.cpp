@@ -31,16 +31,18 @@ public:
 	{
 		cout << "delete te" << endl;
 	}
+	void setS(const string&& sl)
+	{
+		s = sl;
+	}
+	string getS()
+	{
+		return s;
+	}
 private:
 	int i;
+	string s;
 };
-
-unique_ptr<string> ptr(new string("sdsd"));
-
-unique_ptr<string> func()
-{
-	return move(ptr);
-}
 
 void printChar(string s)
 {
@@ -49,7 +51,30 @@ void printChar(string s)
 	printf("\n");
 }
 
-#define ADD(a, b) printf(#a" + "#b" = %d\n", a + b)
+enum class c{
+	k = 1,
+	d = 4
+};
+
+ostream& operator<<(ostream& os, c l)
+{
+	switch(l)
+	{
+		case c::d:
+			os << 4;break;
+		case c::k:
+			os << 1;break;
+	}
+	return os;
+}
+
+te t;
+void func()
+{
+	string s = "asd";
+	t.setS(move(s));
+}
+
 int main(void)
 {
 	/*
@@ -58,9 +83,7 @@ int main(void)
 	cout << ptr << endl;
 	(t.*ptr)();
 	*/
-	string s1 = "你好";
-	printChar(s1);
-	string s2 = boost::locale::conv::from_utf(s1.c_str(), "gbk");
-	printChar(s2);
+	func();
+	cout << t.getS() << endl;
 	return 0;
 }

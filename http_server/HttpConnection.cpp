@@ -16,7 +16,6 @@ namespace sone
 	void HttpConnection::connecionEstablished()
 	{
 		_dispatcher->enableReading();
-		//_dispatcher->enableRDhup();
 		connection_cb(shared_from_this());
 	}
 
@@ -38,7 +37,11 @@ namespace sone
 
 	void HttpConnection::handleWrite()
 	{
-
+		ssize_t len = ::write(_socket->getFd(), output_buffer.peek(), output_buffer.dataLen());
+		if(len == output_buffer.dataLen() && _request->getHeader("Connection") == "close")
+			handleClose();
+		else
+			output_buffer.moveLow(len);
 	}
 
 	void HttpConnection::handleClose()
@@ -50,6 +53,14 @@ namespace sone
 
 	void HttpConnection::send(Buffer* buf)
 	{
-		
+		ssize_t len = ::write(_socket->getFd(), buf->peek(), buf->dataLen());
+		if(len < buf->dataLen())
+		{
+			_dispatcher->enableWriting();
+			output_buffer.append(buf->peek() + len, buf->dataLen() - len);
+		}
+		//一次write发送完所有数据
+		else if(_request->getHeader("Connection") == "close")
+			handleClose();
 	}
 }

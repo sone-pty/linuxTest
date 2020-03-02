@@ -47,6 +47,10 @@ namespace sone
 			X(Accept_Language)
 			X(Authorization)
 			X(Cookie)
+			X(Upgrade_Insecure_Requests)
+			X(Sec_Fetch_User)
+			X(Sec_Fetch_Site)
+			X(Sec_Fetch_Mode)
 			X(Age)
 			X(Public)
 			X(Server)
@@ -168,6 +172,14 @@ namespace sone
 				res = "Authorization";break;
 			case http_headers::Cookie:
 				res = "Cookie";break;
+			case http_headers::Upgrade_Insecure_Requests:
+				res = "Upgrade-Insecure-Requests";break;
+			case http_headers::Sec_Fetch_Mode:
+				res = "Sec-Fetch-Mode";break;
+			case http_headers::Sec_Fetch_Site:
+				res = "Sec-Fetch-Site";break;
+			case http_headers::Sec_Fetch_User:
+				res = "Sec-Fetch-User";break;
 			case http_headers::Age:
 				res = "Age";break;
 			case http_headers::Public:
@@ -330,6 +342,11 @@ namespace sone
 		_content = content;
 	}
 
+	void HttpResponse::setContent(const std::string&& content)
+	{
+		_content = content;
+	}
+
 	bool HttpResponse::setHeader(const std::string& key, const std::string& val)
 	{
 		auto iter = HEADERS.find(key);
@@ -345,6 +362,16 @@ namespace sone
 	void HttpResponse::setVersion(http_version ver)
 	{
 		_version = ver;
+	}
+		
+	http_resp_state HttpResponse::getRestState()
+	{
+		return _state;
+	}
+
+	void HttpResponse::setRespState(http_resp_state state)
+	{
+		_state = state;
 	}
 
 	std::string HttpResponse::getCookie(const std::string& key)
@@ -377,9 +404,28 @@ namespace sone
 		res.reserve(512);
 		//状态行
 		if(_version == http_version::HTTP10)
-			res.append("HTTP/1.0 200 OK\r\n");
+			res.append("HTTP/1.0 ");
 		else if(_version == http_version::HTTP11)
-			res.append("HTTP/1.1 200 OK\r\n");
+			res.append("HTTP/1.1 ");
+		switch(_state)
+		{
+			case http_resp_state::Continue:
+				res.append("100 Continue\r\n");break;
+			case http_resp_state::OK:
+				res.append("200 OK\r\n");break;
+			case http_resp_state::Not_Found:
+				res.append("404 Not Found\r\n");break;
+			case http_resp_state::Bad_Request:
+				res.append("400 Bad Request\r\n");break;
+			case http_resp_state::Forbidden:
+				res.append("403 Forbidden\r\n");break;
+			case http_resp_state::Internal_Server_Error:
+				res.append("500 Internal Server Error\r\n");break;
+			case http_resp_state::HTTP_Version_Not_Supported:
+				res.append("505 HTTP Version Not Supported\r\n");break;
+			default:
+				break;
+		}
 		//首部
 		for(auto iter = _headers.begin();iter != _headers.end();++iter)
 			res.append(iter->first + ": " + iter->second + "\r\n");

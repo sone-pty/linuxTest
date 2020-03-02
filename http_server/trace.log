@@ -789,3 +789,83 @@
 2020-02-18 20:40:32	[TID]:17460	[PID]:17439	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
 2020-02-18 20:40:36	[TID]:17451	[PID]:17439	/home/sone/pro/http_server/HttpServer.cpp:128	[NOTE]:new conn
 2020-02-18 20:40:36	[TID]:17450	[PID]:17439	/home/sone/pro/http_server/HttpServer.cpp:128	[NOTE]:new conn
+2020-03-02 23:31:47	[TID]:13403	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13404	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13407	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13406	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13408	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13405	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13409	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13410	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:47	[TID]:13398	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13408	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13406	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13404	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13398	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13407	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13409	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13405	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13403	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:57	[TID]:13410	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:31:59	[TID]:13403	[PID]:13398	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:31:59	[TID]:13409	[PID]:13398	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:32:07	[TID]:13404	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:07	[TID]:13407	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:07	[TID]:13405	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:07	[TID]:13406	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:07	[TID]:13408	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:07	[TID]:13410	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:09	[TID]:13398	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:09	[TID]:13403	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:09	[TID]:13409	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:17	[TID]:13405	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:17	[TID]:13410	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:17	[TID]:13408	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:17	[TID]:13406	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:17	[TID]:13407	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:17	[TID]:13404	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:19	[TID]:13398	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:19	[TID]:13403	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:32:19	[TID]:13409	[PID]:13398	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13672	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13673	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13674	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13671	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13668	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13670	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13667	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13669	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:26	[TID]:13662	[PID]:13662	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:34:31	[TID]:13667	[PID]:13662	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:34:31	[TID]:13673	[PID]:13662	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:42:52	[TID]:14270	[PID]:14265	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:42:52	[TID]:14270	[PID]:14265	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:42:52	[TID]:14270	[PID]:14265	/home/sone/pro/http_server/HttpServer.cpp:117	[NOTE]:开始解析于2020-03-02 23:42:52的请求，成功解析完成
+2020-03-02 23:42:57	[TID]:14273	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:42:57	[TID]:14274	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:42:57	[TID]:14275	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:42:57	[TID]:14272	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:42:57	[TID]:14276	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:42:57	[TID]:14277	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:42:57	[TID]:14271	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:02	[TID]:14265	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:02	[TID]:14270	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14275	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14276	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14277	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14271	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14274	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14272	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:43:07	[TID]:14273	[PID]:14265	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14503	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14498	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14508	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14507	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14509	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14505	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14506	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14504	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:20	[TID]:14510	[PID]:14498	/home/sone/pro/http_server/epoller.cpp:47	[NOTE]:epoller::epoll(): no events happened
+2020-03-02 23:44:21	[TID]:14509	[PID]:14498	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
+2020-03-02 23:44:21	[TID]:14509	[PID]:14498	/home/sone/pro/http_server/HttpServer.cpp:117	[NOTE]:开始解析于2020-03-02 23:44:21的请求，成功解析完成
+2020-03-02 23:44:46	[TID]:14504	[PID]:14498	/home/sone/pro/http_server/HttpServer.cpp:131	[NOTE]:new conn
