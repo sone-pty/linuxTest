@@ -78,6 +78,11 @@ namespace sone
 		}
 	}
 
+	void Buffer::append(const std::string& message)
+	{
+		append(message.c_str(), message.length());
+	}
+	
 	char* Buffer::peek()
 	{
 		return begin() + low;

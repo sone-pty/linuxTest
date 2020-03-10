@@ -30,6 +30,7 @@ public:
 	bool moveLow(size_t n);
 	//可能需要扩容
 	void append(const char* buf, size_t len);
+	void append(const std::string& message);
 	//当前空闲部分长度
 	int freeLen() { return low + _vec.size() - high; }
 	//当前有效数据长度

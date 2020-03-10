@@ -63,6 +63,23 @@ namespace sone
 		return main_loop;
 	}
 
+	void HttpServer::retErrResponse(const TcpConnection::ptr& conn)
+	{
+		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
+		HttpResponse resp;
+		resp.setVersion(http_conn->getRequest()->getVersion());
+		resp.setHeader("Content-Type", "text/html;charset=utf-8");
+		resp.setHeader("Server", SERVER_VERSION);
+		resp.setHeader("Date", util::Timestamp().toGMTString());
+		resp.setContent(ERROR_REQ_PAGE);
+		resp.setHeader("Content-Length", std::to_string(ERROR_REQ_PAGE.length()));
+		Buffer buf;
+		buf.append(resp.toString());
+		//将Connection首部设置为close，使得能够直接关闭连接
+		http_conn->getRequest()->setHeader("Connection", "close");
+		http_conn->send(&buf);
+	}
+
 	void HttpServer::onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t)
 	{
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
@@ -83,6 +100,7 @@ namespace sone
 						if(!parseRequestLine(buffer, conn))
 						{
 							//返回错误页面并关闭连接
+							retErrResponse(http_conn);
 							return;
 						}
 						break;
@@ -92,6 +110,7 @@ namespace sone
 						if(!parseHeaderLine(buffer, conn))
 						{
 							//返回错误页面并关闭连接
+							retErrResponse(http_conn);
 							return;
 						}
 						break;
@@ -101,6 +120,7 @@ namespace sone
 						if(!parseContent(buffer, conn))
 						{
 							//返回错误页面并关闭连接
+							retErrResponse(http_conn);
 							return;
 						}
 						break;
@@ -111,7 +131,11 @@ namespace sone
 		if(line_state == http_line_state::LINE_ERROR)
 		{
 			//返回错误页面并关闭连接
+			retErrResponse(http_conn);
+			return;
 		}
+		else if(line_state == http_line_state::LINE_MORE)
+			return;
 
 		//解析请求成功
 		SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
@@ -128,7 +152,7 @@ namespace sone
 	{
 		if(conn)
 		{
-			SONE_LOG_TRACE() << "new conn";
+			//SONE_LOG_TRACE() << "new conn";
 		}
 	}
 
@@ -145,7 +169,7 @@ namespace sone
 		resp.setVersion(req->getVersion());
 		resp.setHeader("Content-Type", "text/html;charset=utf-8");
 		resp.setHeader("Server", SERVER_VERSION);
-		//resp.setHeader("Date", util::Timestamp().to_string(false));
+		resp.setHeader("Date", util::Timestamp().toGMTString());
 		std::string request_url = std::move(req->getRequestUrl());
 		std::string complete_url(WEB_ROOT);
 		complete_url.append(request_url);
@@ -153,11 +177,9 @@ namespace sone
 		int fd = ::open(complete_url.c_str(), O_RDONLY);
 		if(fd == -1)
 		{
-			SONE_LOG_ERR() << "createResponse---open() failed";
-			if(errno == EACCES)
-				resp.setRespState(http_resp_state::Not_Found);
-			else
-				resp.setRespState(http_resp_state::Internal_Server_Error);
+			resp.setRespState(http_resp_state::Not_Found);
+			resp.setContent(NOT_FOUND_PAGE);
+			resp.setHeader("Content-Length", std::to_string(NOT_FOUND_PAGE.length()));
 		}
 		else
 		{
@@ -167,8 +189,9 @@ namespace sone
 			while((len = ::read(fd, buf, BUFSIZE)) != 0)
 				s.append(buf, buf + len);
 			resp.setContent(std::move(s));
+			resp.setHeader("Content-Length", std::to_string(resp.getContent().length()));
+			resp.setRespState(http_resp_state::OK);
 		}
-		resp.setRespState(http_resp_state::OK);
 	}
 
 	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)

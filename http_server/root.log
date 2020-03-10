@@ -1,122 +1,15 @@
-2020-02-17 14:14:47	6917	UNKNOW	6897	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:69	GET /home/popp HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
+2020-03-10 22:18:05	18173	UNKNOW	18161	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:92	GET /index.html HTTP/1.1
+2020-03-10 22:22:02	18798	UNKNOW	18786	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:92	GET /index.html HTTP/1.1
+2020-03-10 22:23:57	18959	UNKNOW	18946	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:92	GET /index.html HTTP/1.1
+2020-03-10 22:34:56	19694	UNKNOW	19682	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:92	GET /index.html HTTP/1.1
 
+jk:sd
 
-2020-02-17 14:43:58	7900	UNKNOW	7880	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:69	GET /home/popp HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
+2020-03-10 22:37:00	19876	UNKNOW	19862	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:92	GET /index.html HTTP/1.1
 
+jk:sd
 
-2020-02-17 14:49:27	8129	UNKNOW	8112	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:69	GET /home/popp HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
-
-
-2020-02-17 14:52:03	8292	UNKNOW	8275	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:69	GET /home/popp HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
-
-
-2020-02-18 20:40:36	17450	UNKNOW	17439	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:72	GET / HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
-
-
-2020-03-02 23:31:59	13409	UNKNOW	13398	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:75	GET /index.html HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
-
-
-2020-03-02 23:34:31	13673	UNKNOW	13662	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:75	GET /index.html HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
-
-
-2020-03-02 23:42:52	14270	UNKNOW	14265	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:75	GET /index.html HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Cache-Control: max-age=0
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
-
-
-2020-03-02 23:44:21	14509	UNKNOW	14498	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:75	GET /index.html HTTP/1.1
-Host: 127.0.0.1:8987
-Connection: keep-alive
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36
-Sec-Fetch-User: ?1
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Accept-Encoding: gzip, deflate, br
-Accept-Language: zh-CN,zh;q=0.9
+2020-03-10 22:39:03	20197	UNKNOW	20184	[DEBUG]	[root]	/home/sone/pro/http_server/HttpServer.cpp:92	GET /index.html HTTP/1.1
+jk:sd
 
 

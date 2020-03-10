@@ -48,6 +48,7 @@ public:
 	explicit Timestamp(struct timeval& tv);
 	//返回秒级别的时间戳(usec为true时返回微妙级别)
 	std::string to_string(bool usec);
+	std::string toGMTString();
 private:
 	bool now();
 private:

@@ -33,6 +33,8 @@ private:
 	bool parseContent(Buffer* buf, const TcpConnection::ptr& conn);
 	//构造响应
 	void createResponse(HttpResponse& resp, HttpRequest* req);
+	//返回错误响应并关闭连接
+	void retErrResponse(const TcpConnection::ptr& conn);
 private:
 	//主线程eventloop
 	eventloop* main_loop;

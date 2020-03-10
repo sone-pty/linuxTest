@@ -119,11 +119,19 @@ namespace util
 	{
 		struct tm t;
 		char s[128];
-		std::string res;
 		::localtime_r(&sec, &t);
 		::strftime(s, 128, "%Y-%m-%d %H:%M:%S", &t);
 		if(usec)
 			sprintf(s + strlen(s), ":%06ld", this->usec);
+		return std::string(s);
+	}
+
+	std::string Timestamp::toGMTString()
+	{
+		struct tm t;
+		char s[128];
+		::localtime_r(&sec, &t);
+		::strftime(s, 128, "%a, %d %b %Y %H:%M:%S", &t);
 		return std::string(s);
 	}
 }
