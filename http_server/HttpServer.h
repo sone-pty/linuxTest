@@ -35,6 +35,8 @@ private:
 	void createResponse(HttpResponse& resp, HttpRequest* req);
 	//返回错误响应并关闭连接
 	void retErrResponse(const TcpConnection::ptr& conn);
+	//压缩数据
+	std::string gzipCompress(const std::string& s);
 private:
 	//主线程eventloop
 	eventloop* main_loop;

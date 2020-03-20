@@ -6,7 +6,7 @@ pip install shadowsocks
 mkdir /etc/shadowsocks
 
 echo '{
-	"server":"104.207.154.42",
+	"server":"167.179.88.208",
     "server_port":8888,
     "password":"987712pty",
     "timeout":600,

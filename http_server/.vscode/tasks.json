@@ -14,7 +14,9 @@
                     "args": [
                             "-g",
                             "${fileDirname}/*.cpp",
-                            "-lpthread",
+							"-lpthread",
+							"-lboost_iostreams",
+							"-lboost_zlib",
                             //"-lboost_locale",
                             //"-D NDEBUG",
                             "-o",

@@ -51,6 +51,7 @@ namespace sone
 			X(Sec_Fetch_User)
 			X(Sec_Fetch_Site)
 			X(Sec_Fetch_Mode)
+			X(Purpose)
 			X(Age)
 			X(Public)
 			X(Server)
@@ -180,6 +181,8 @@ namespace sone
 				res = "Sec-Fetch-Site";break;
 			case http_headers::Sec_Fetch_User:
 				res = "Sec-Fetch-User";break;
+			case http_headers::Purpose:
+				res = "Purpose";break;
 			case http_headers::Age:
 				res = "Age";break;
 			case http_headers::Public:
@@ -344,7 +347,7 @@ namespace sone
 
 	void HttpResponse::setContent(const std::string&& content)
 	{
-		_content = content;
+		_content = std::move(content);
 	}
 
 	bool HttpResponse::setHeader(const std::string& key, const std::string& val)

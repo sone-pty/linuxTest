@@ -67,6 +67,7 @@ enum class http_headers
 	Sec_Fetch_User,
 	Sec_Fetch_Site,
 	Sec_Fetch_Mode,
+	Purpose,
 	//响应首部
 	Age,
 	Public,

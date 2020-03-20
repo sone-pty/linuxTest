@@ -6,6 +6,16 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/device/file.hpp>
+ 
+#include <iostream>
+#include <sstream>
+
 namespace sone
 {
 	HttpServer::HttpServer(eventloop* loop, const InetAddress& listenaddr)
@@ -85,8 +95,9 @@ namespace sone
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
 		req_check_state req_state;
 		http_line_state line_state;
+		bool flag = false;
 
-		if(!http_conn->getRequest())
+		if (!http_conn->getRequest())
 			http_conn->setRequest(new HttpRequest());
 
 		SONE_LOG_ROOT() << buffer->getDataToString(buffer->dataLen());
@@ -123,6 +134,7 @@ namespace sone
 							retErrResponse(http_conn);
 							return;
 						}
+						flag = true;
 						break;
 					}
 			}
@@ -134,7 +146,7 @@ namespace sone
 			retErrResponse(http_conn);
 			return;
 		}
-		else if(line_state == http_line_state::LINE_MORE)
+		else if(line_state == http_line_state::LINE_MORE && !flag)
 			return;
 
 		//解析请求成功
@@ -188,7 +200,10 @@ namespace sone
 			ssize_t len;
 			while((len = ::read(fd, buf, BUFSIZE)) != 0)
 				s.append(buf, buf + len);
+			//gzip压缩
+			s = gzipCompress(s);
 			resp.setContent(std::move(s));
+			//move之后s不可用
 			resp.setHeader("Content-Length", std::to_string(resp.getContent().length()));
 			resp.setRespState(http_resp_state::OK);
 		}
@@ -203,6 +218,17 @@ namespace sone
 		//以防keep-alive，重置解析状态
 		http_conn->setReqstate(req_check_state::CHECK_REQUESTLINE);
 		return true;
+	}
+
+	std::string HttpServer::gzipCompress(const std::string& s)
+	{
+		std::stringstream ss, dest;
+		ss << s.c_str();
+		boost::iostreams::filtering_ostream out;
+		out.push(boost::iostreams::gzip_compressor());
+		out.push(dest);
+		boost::iostreams::copy(ss, out);
+		return ss.str();
 	}
 
 	bool HttpServer::parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn)
