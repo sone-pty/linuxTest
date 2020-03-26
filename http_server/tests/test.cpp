@@ -65,14 +65,17 @@ private:
 	mstring ms;
 };
 
-int main(void)
+void func(user& s)
 {
 	char buf[64] = "hello";
 	mstring ms(buf, strlen(buf));
-	user s;
 	s.setms(move(ms));
-	if(ms.getBuf() == nullptr)
-		cout << "yes" << endl;
+}
+
+int main(void)
+{
+	user s;
+	func(s);
 	cout << s.getms() << endl;
 	return 0;
 }
