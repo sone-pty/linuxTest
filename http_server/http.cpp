@@ -52,6 +52,7 @@ namespace sone
 			X(Sec_Fetch_Site)
 			X(Sec_Fetch_Mode)
 			X(Purpose)
+			X(If_Modified_Since)
 			X(Age)
 			X(Public)
 			X(Server)
@@ -79,6 +80,8 @@ namespace sone
 				res = "UNKNOW";break;
 			case http_resp_state::OK:
 				res = "OK";break;
+			case http_resp_state::Not_Modified:
+				res = "Not Modified";break;
 			case http_resp_state::Bad_Request:
 				res = "Bad Request";break;
 			case http_resp_state::Continue:
@@ -183,6 +186,8 @@ namespace sone
 				res = "Sec-Fetch-User";break;
 			case http_headers::Purpose:
 				res = "Purpose";break;
+			case http_headers::If_Modified_Since:
+				res = "If-Modified-Since";break;
 			case http_headers::Age:
 				res = "Age";break;
 			case http_headers::Public:
@@ -416,6 +421,8 @@ namespace sone
 				res.append("100 Continue\r\n");break;
 			case http_resp_state::OK:
 				res.append("200 OK\r\n");break;
+			case http_resp_state::Not_Modified:
+				res.append("304 Not Modified\r\n");break;
 			case http_resp_state::Not_Found:
 				res.append("404 Not Found\r\n");break;
 			case http_resp_state::Bad_Request:

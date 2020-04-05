@@ -38,8 +38,13 @@ namespace sone
 	void HttpConnection::handleWrite()
 	{
 		ssize_t len = ::write(_socket->getFd(), output_buffer.peek(), output_buffer.dataLen());
-		if(len == output_buffer.dataLen() && _request->getHeader("Connection") == "close")
-			handleClose();
+		if(len == output_buffer.dataLen())
+		{
+			if(_request->getHeader("Connection") == "close")
+				handleClose();
+			else
+				_dispatcher->disableWriting();
+		}
 		else
 			output_buffer.moveLow(len);
 	}

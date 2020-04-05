@@ -37,6 +37,8 @@ pid_t getTid();
 struct sockaddr_in getAddrbyFdV4(int fd);
 //URL解码
 std::string URLDecode(const std::string& s);
+//比较两个GMT字符串的大小(如果s1 < s2返回false；否则返回true)
+bool compareGMTStr(const std::string &s1, const std::string &s2);
 
 //时间戳类(us级别)
 class Timestamp{
@@ -46,9 +48,12 @@ public:
 	explicit Timestamp();
 	//指定结构体
 	explicit Timestamp(struct timeval& tv);
+	explicit Timestamp(time_t s, int64_t us);
 	//返回秒级别的时间戳(usec为true时返回微妙级别)
 	std::string to_string(bool usec);
 	std::string toGMTString();
+	void setSecond(time_t sec) { this->sec = sec; }
+	void setUSecond(int64_t usec) { this->usec = usec; }
 private:
 	bool now();
 private:

@@ -1,4 +1,6 @@
 #include "utils.h"
+#include <regex>
+#include <map>
 
 namespace util
 {
@@ -88,6 +90,85 @@ namespace util
 		return (&(*res.begin()));
 	}
 
+	struct Icase : public std::binary_function<std::string, std::string, bool>
+	{
+		bool operator()(const std::string& lhs, const std::string& rhs) const
+		{
+			return strcasecmp(lhs.c_str(), rhs.c_str()) < 0;
+		}
+	};
+	
+	static std::map<std::string, int, Icase> MONTH_MAP = 
+	{
+		{ "Jan", 1 },
+		{ "Feb", 2 },
+		{ "Mar", 3 },
+		{ "Apr", 4 },
+		{ "May", 5 },
+		{ "Jun", 6 },
+		{ "Jul", 7 },
+		{ "Aug", 8 },
+		{ "Sept", 9 },
+		{ "Oct", 10 },
+		{ "Nov", 11 },
+		{ "Dec", 12 },
+	};
+	
+	bool compareGMTStr(const std::string &s1, const std::string &s2)
+	{
+		struct date{
+			int year, month, day;
+			int hour, minute, sec;
+		}d1, d2;
+		
+		std::regex r("[a-z]{3,3}, ([0-9]{1,2}) ([a-z]{3,4}) ([0-9]{4,4}) ([0-9][0-9]):([0-9][0-9]):([0-9][0-9]) GMT", std::regex::icase);
+		std::smatch res;
+		
+		if(std::regex_search(s1, res, r))
+		{
+			d1.day = atoi(res.str(1).c_str());
+			d1.month = MONTH_MAP[res.str(2)];
+			d1.year = atoi(res.str(3).c_str());
+			d1.hour = atoi(res.str(4).c_str());
+			d1.minute = atoi(res.str(5).c_str());
+			d1.sec = atoi(res.str(6).c_str());
+		}
+		if(std::regex_search(s2, res, r))
+		{
+			d2.day = atoi(res.str(1).c_str());
+			d2.month = MONTH_MAP[res.str(2)];
+			d2.year = atoi(res.str(3).c_str());
+			d2.hour = atoi(res.str(4).c_str());
+			d2.minute = atoi(res.str(5).c_str());
+			d2.sec = atoi(res.str(6).c_str());
+		}
+		
+		if(d1.year > d2.year)
+			return true;
+		else if(d1.year < d2.year)
+			return false;
+		else if(d1.month > d2.month)
+			return true;
+		else if(d1.month < d2.month)
+			return false;
+		else if(d1.day > d2.day)
+			return true;
+		else if(d1.day < d2.day)
+			return false;
+		else if(d1.hour > d2.hour)
+			return true;
+		else if(d1.hour < d2.hour)
+			return false;
+		else if(d1.minute > d2.minute)
+			return true;
+		else if(d1.minute < d2.minute)
+			return false;
+		else if(d1.sec >= d2.sec)
+			return true;
+		else
+			return false;
+	}
+
 	/*Timestamp*/
 	Timestamp::Timestamp()
 	{
@@ -95,6 +176,9 @@ namespace util
 		if(!now())
 			SONE_LOG_ROOT() << "Timestamp获取当前时间失败";
 	}
+
+	Timestamp::Timestamp(time_t s, int64_t us)
+		:sec(s), usec(us) {}
 
 	Timestamp::Timestamp(struct timeval& tv)
 		:_tv(tv)
@@ -131,7 +215,7 @@ namespace util
 		struct tm t;
 		char s[128];
 		::localtime_r(&sec, &t);
-		::strftime(s, 128, "%a, %d %b %Y %H:%M:%S", &t);
+		::strftime(s, 128, "%a, %d %b %Y %H:%M:%S GMT", &t);
 		return std::string(s);
 	}
 }

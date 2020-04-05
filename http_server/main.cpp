@@ -44,10 +44,10 @@ int main(void)
 {
 	//忽视SIGPIPE
 	struct sigaction sa;
-    sa.sa_handler = handle_pipe;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGPIPE, &sa, NULL);
+	sa.sa_handler = handle_pipe;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGPIPE, &sa, NULL);
 
 	InetAddress addr("127.0.0.1", 8987, false);
 	eventloop loop;

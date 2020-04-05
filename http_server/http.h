@@ -68,6 +68,7 @@ enum class http_headers
 	Sec_Fetch_Site,
 	Sec_Fetch_Mode,
 	Purpose,
+	If_Modified_Since,
 	//响应首部
 	Age,
 	Public,
@@ -93,6 +94,7 @@ enum class http_resp_state
 	UNKNOW = 1,
 	Continue = 100,
 	OK = 200,
+	Not_Modified = 304,
 	Not_Found = 404,
 	Bad_Request = 400,
 	Forbidden = 403,

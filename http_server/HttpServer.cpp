@@ -177,16 +177,42 @@ namespace sone
 
 	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req)
 	{
+		std::string request_url = std::move(req->getRequestUrl());
+		std::string complete_url(WEB_ROOT);
+		complete_url.append(request_url);
+		util::Timestamp ts(0, 0);
+		
+		int fd = ::open(complete_url.c_str(), O_RDONLY);
 		char buf[BUFSIZE];
+		
 		resp.setVersion(req->getVersion());
 		resp.setHeader("Content-Type", "text/html;charset=utf-8");
 		resp.setHeader("Server", SERVER_VERSION);
 		resp.setHeader("Date", util::Timestamp().toGMTString());
-		std::string request_url = std::move(req->getRequestUrl());
-		std::string complete_url(WEB_ROOT);
-		complete_url.append(request_url);
+		//检查请求中的协商缓存
+		std::string modified_time = req->getHeader("If-Modified-Since");
+		if(modified_time != "")
+		{
+			//检查最后一次修改时间
+			if(fd != -1)
+			{
+				struct stat s;
+				int ret = ::fstat(fd, &s);
+				if(ret < 0)
+					SONE_LOG_ERR() << "fstat(...) failed";
+				ts.setSecond(s.st_mtim.tv_sec);
+				std::string tsGmt = ts.toGMTString();
+				//协商缓存成功，直接返回
+				if(util::compareGMTStr(modified_time, tsGmt))
+				{
+					resp.setRespState(http_resp_state::Not_Modified);
+					return;
+				}
+			}
+		}
 		
-		int fd = ::open(complete_url.c_str(), O_RDONLY);
+		//第一次访问该资源或者资源失效的情况
+		resp.setHeader("Last-Modified", ts.toGMTString());
 		if(fd == -1)
 		{
 			resp.setRespState(http_resp_state::Not_Found);

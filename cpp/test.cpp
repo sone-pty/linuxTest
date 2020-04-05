@@ -10,6 +10,10 @@
 #include <map>
 #include <algorithm>
 #include <boost/locale.hpp>
+#include <set>
+#include <bitset>
+#include <queue>
+#include <regex>
 
 using namespace std;
 
@@ -68,11 +72,40 @@ ostream& operator<<(ostream& os, c l)
 	return os;
 }
 
-te t;
-void func()
+void build(vector<int>& vec, string& p)
 {
-	string s = "asd";
-	t.setS(move(s));
+	int j = 0, t = -1;
+	vec[0] = -1;
+
+	while(j < (int)p.length())
+	{
+		if(t < 0 || p[j] == p[t])
+		{
+			++t;++j;
+			vec[j] = t;
+		}
+		else
+			t = vec[t];
+	}
+}
+
+int kmp(string s, string p)
+{
+	vector<int> ne(p.length());
+	build(ne, p);
+
+	int i = 0, j = -1;
+
+	while(i < (int)s.length() && j < (int)p.length())
+	{
+		if(j < 0 || s[i] == p[j])
+		{
+			++i;++j;
+		}
+		else
+			j = ne[j];
+	}
+	return i - j;
 }
 
 int main(void)
@@ -82,8 +115,19 @@ int main(void)
 	void (te::*ptr)() = &te::func;
 	cout << ptr << endl;
 	(t.*ptr)();
-	*/
-	func();
-	cout << t.getS() << endl;
 	return 0;
+	*/
+	smatch res;
+	regex r("[a-z]{3,3}, ([0-9]{1,2}) ([a-z]{3,3}) ([0-9]{4,4}) ([0-9][0-9]:[0-9][0-9]:[0-9][0-9]) GMT", regex::icase);
+	string str = "Sat, 7 Jun 2015 16:48:38 GMT";
+	if(regex_search(str, res, r))
+	{
+		cout << res.str(1) << endl;
+		cout << res.str(2) << endl;
+		cout << res.str(3) << endl;
+		cout << res.str(4) << endl;
+	}
+	string ss = "09";
+	int i = atoi(ss.c_str());
+	cout << i << endl;
 }
