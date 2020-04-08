@@ -54,6 +54,8 @@ public:
 	std::string toGMTString();
 	void setSecond(time_t sec) { this->sec = sec; }
 	void setUSecond(int64_t usec) { this->usec = usec; }
+	time_t getSecond() const { return sec; }
+	int64_t getUSecond() const { return usec; }
 private:
 	bool now();
 private:

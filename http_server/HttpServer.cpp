@@ -153,7 +153,7 @@ namespace sone
 		SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
 		
 		HttpResponse resp;
-		createResponse(resp, http_conn->getRequest());
+		createResponse(resp, http_conn->getRequest(), t);
 		Buffer buf;
 		std::string message = std::move(resp.toString());
 		buf.append(message.c_str(), message.length());
@@ -175,7 +175,7 @@ namespace sone
 			SONE_LOG_ERR() << "HttpServer::onClose()-----connections.erase()失败";
 	}
 
-	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req)
+	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req, util::Timestamp req_time)
 	{
 		std::string request_url = std::move(req->getRequestUrl());
 		std::string complete_url(WEB_ROOT);
@@ -213,6 +213,9 @@ namespace sone
 		
 		//第一次访问该资源或者资源失效的情况
 		resp.setHeader("Last-Modified", ts.toGMTString());
+		req_time.setSecond(req_time.getSecond() + HTTP_CACHE_MAX_AGE);
+		resp.setHeader("Expires", req_time.toGMTString());
+		resp.setHeader("Cache-Control", "max-age=" + std::to_string(HTTP_CACHE_MAX_AGE));
 		if(fd == -1)
 		{
 			resp.setRespState(http_resp_state::Not_Found);

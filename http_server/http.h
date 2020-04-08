@@ -75,6 +75,7 @@ enum class http_headers
 	Server,
 	Title,
 	Set_Cookie,
+	Expires,
 	//实体首部
 	Location,
 	Content_Base,

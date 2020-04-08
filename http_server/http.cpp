@@ -58,6 +58,7 @@ namespace sone
 			X(Server)
 			X(Title)
 			X(Set_Cookie)
+			X(Expires)
 			X(Location)
 			X(Content_Base)
 			X(Content_Encoding)
@@ -198,6 +199,8 @@ namespace sone
 				res = "Title";break;
 			case http_headers::Set_Cookie:
 				res = "Set-Cookie";break;
+			case http_headers::Expires:
+				res = "Expires";break;
 			case http_headers::Location:
 				res = "Location";break;
 			case http_headers::Content_Base:

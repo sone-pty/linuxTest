@@ -32,7 +32,7 @@ private:
 	bool parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn);
 	bool parseContent(Buffer* buf, const TcpConnection::ptr& conn);
 	//构造响应
-	void createResponse(HttpResponse& resp, HttpRequest* req);
+	void createResponse(HttpResponse& resp, HttpRequest* req, util::Timestamp req_time);
 	//返回错误响应并关闭连接
 	void retErrResponse(const TcpConnection::ptr& conn);
 	//压缩数据
