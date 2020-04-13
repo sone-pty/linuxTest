@@ -62,7 +62,7 @@ namespace sone
 			//空闲部分不足以填入，需要扩容
 			if(static_cast<size_t>(freeLen()) < len)
 			{
-				_vec.resize(2 * _vec.size());
+				_vec.reserve(_vec.capacity() + (len << 1));
 				std::copy(buf, buf + len, begin() + high);
 				high += len;
 			}

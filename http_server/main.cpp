@@ -54,5 +54,6 @@ int main(void)
 	HttpServer server(&loop, addr);
 	server.start();
 	loop.startloop();
+
 	return 0;
 }

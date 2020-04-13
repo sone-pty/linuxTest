@@ -117,17 +117,8 @@ int main(void)
 	(t.*ptr)();
 	return 0;
 	*/
-	smatch res;
-	regex r("[a-z]{3,3}, ([0-9]{1,2}) ([a-z]{3,3}) ([0-9]{4,4}) ([0-9][0-9]:[0-9][0-9]:[0-9][0-9]) GMT", regex::icase);
-	string str = "Sat, 7 Jun 2015 16:48:38 GMT";
-	if(regex_search(str, res, r))
-	{
-		cout << res.str(1) << endl;
-		cout << res.str(2) << endl;
-		cout << res.str(3) << endl;
-		cout << res.str(4) << endl;
-	}
-	string ss = "09";
-	int i = atoi(ss.c_str());
-	cout << i << endl;
+	vector<int> vec(10, 1);
+	vec.reserve(20);
+	cout << vec[1] << endl;
+	cout << vec.size() << endl;
 }

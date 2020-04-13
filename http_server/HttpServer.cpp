@@ -15,6 +15,7 @@
  
 #include <iostream>
 #include <sstream>
+#include <regex>
 
 namespace sone
 {
@@ -186,7 +187,7 @@ namespace sone
 		char buf[BUFSIZE];
 		
 		resp.setVersion(req->getVersion());
-		resp.setHeader("Content-Type", "text/html;charset=utf-8");
+		//resp.setHeader("Content-Type", "text/html;charset=utf-8");
 		resp.setHeader("Server", SERVER_VERSION);
 		resp.setHeader("Date", util::Timestamp().toGMTString());
 		//检查请求中的协商缓存
@@ -224,13 +225,34 @@ namespace sone
 		}
 		else
 		{
+			//对应的资源
 			std::string s;
 			s.reserve(BUFSIZE);
 			ssize_t len;
 			while((len = ::read(fd, buf, BUFSIZE)) != 0)
 				s.append(buf, buf + len);
+			//设置Content-type
+			std::regex r("\\.([a-z]+)", std::regex::icase);
+			std::smatch sma;
+			std::string type;
+			if(std::regex_search(request_url, sma, r))
+			{
+				type = sma.str(1);
+				if(strcasecmp(type.c_str(), "html") == 0)
+					resp.setHeader("Content-Type", "text/html;charset=utf-8");
+				else if(strcasecmp(type.c_str(), "png") == 0)
+					resp.setHeader("Content-Type", "image/png");
+				else if(strcasecmp(type.c_str(), "jpg") == 0)
+					resp.setHeader("Content-Type", "image/jpeg");
+				else if(strcasecmp(type.c_str(), "js") == 0)
+					resp.setHeader("Content-Type", "application/javascript");
+				else if(strcasecmp(type.c_str(), "css") == 0)
+					resp.setHeader("Content-Type", "text/css");
+				else
+					resp.setHeader("Content-Type", "text/plain");
+			}
 			//gzip压缩
-			s = gzipCompress(s);
+			//s = gzipCompress(s);
 			resp.setContent(std::move(s));
 			//move之后s不可用
 			resp.setHeader("Content-Length", std::to_string(resp.getContent().length()));

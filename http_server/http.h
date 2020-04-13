@@ -212,8 +212,9 @@ private:
 	std::map<std::string, std::string> _cookies;
 	//主体
 	std::string _content;
+	//响应报文长度
+	size_t _len;
 };
-
 
 }
 

@@ -444,7 +444,7 @@ namespace sone
 			res.append(iter->first + ": " + iter->second + "\r\n");
 		//主体
 		res.append("\r\n" + _content);
-
+		_len = res.length();
 		return res;
 	}
 }
