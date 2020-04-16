@@ -117,8 +117,6 @@ int main(void)
 	(t.*ptr)();
 	return 0;
 	*/
-	vector<int> vec(10, 1);
-	vec.reserve(20);
-	cout << vec[1] << endl;
-	cout << vec.size() << endl;
+	int x = 2, y = 3, z = 4;
+	cout << (x < y ? y : z) << endl;
 }

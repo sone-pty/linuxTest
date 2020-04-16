@@ -1,6 +1,7 @@
 #include "Socket.h"
 #include <netinet/tcp.h>
 #include <fcntl.h>
+#include <errno.h>
 
 namespace sone
 {
@@ -76,7 +77,7 @@ namespace sone
 		else if(fd == -1)
 		{
 			SONE_LOG_ERR() << "accept发生了错误";
-			abort();
+			//abort();
 		}
 
 		return fd;

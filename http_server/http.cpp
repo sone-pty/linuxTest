@@ -53,6 +53,7 @@ namespace sone
 			X(Sec_Fetch_Mode)
 			X(Purpose)
 			X(If_Modified_Since)
+			X(Referer)
 			X(Age)
 			X(Public)
 			X(Server)
@@ -189,6 +190,8 @@ namespace sone
 				res = "Purpose";break;
 			case http_headers::If_Modified_Since:
 				res = "If-Modified-Since";break;
+			case http_headers::Referer:
+				res = "Referer";break;
 			case http_headers::Age:
 				res = "Age";break;
 			case http_headers::Public:

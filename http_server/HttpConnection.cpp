@@ -40,7 +40,7 @@ namespace sone
 		ssize_t len = ::write(_socket->getFd(), output_buffer.peek(), output_buffer.dataLen());
 		if(len == output_buffer.dataLen())
 		{
-			if(_request->getHeader("Connection") == "close")
+			if(_request->getHeader("Connection") == "close" || _request->getVersion() == http_version::HTTP10)
 				handleClose();
 			else
 				_dispatcher->disableWriting();
@@ -65,7 +65,7 @@ namespace sone
 			output_buffer.append(buf->peek() + len, buf->dataLen() - len);
 		}
 		//一次write发送完所有数据
-		else if(_request->getHeader("Connection") == "close")
+		else if(_request->getHeader("Connection") == "close" || _request->getVersion() == http_version::HTTP10)
 			handleClose();
 	}
 }

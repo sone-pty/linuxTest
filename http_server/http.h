@@ -69,6 +69,7 @@ enum class http_headers
 	Sec_Fetch_Mode,
 	Purpose,
 	If_Modified_Since,
+	Referer,
 	//响应首部
 	Age,
 	Public,

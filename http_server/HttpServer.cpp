@@ -101,7 +101,7 @@ namespace sone
 		if (!http_conn->getRequest())
 			http_conn->setRequest(new HttpRequest());
 
-		SONE_LOG_ROOT() << buffer->getDataToString(buffer->dataLen());
+		//SONE_LOG_ROOT() << buffer->getDataToString(buffer->dataLen());
 		while ((req_state = http_conn->getReqstate()) == req_check_state::CHECK_CONTENT || (line_state = parseLine(buffer)) == http_line_state::LINE_OK)
 		{
 			//req_state = http_conn->getReqstate();
@@ -151,7 +151,7 @@ namespace sone
 			return;
 
 		//解析请求成功
-		SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
+		//SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
 		
 		HttpResponse resp;
 		createResponse(resp, http_conn->getRequest(), t);
@@ -173,7 +173,7 @@ namespace sone
 	{
 		int nums = connections.erase(conn->getSockfd());
 		if(nums == 0)
-			SONE_LOG_ERR() << "HttpServer::onClose()-----connections.erase()失败";
+			SONE_LOG_ERR() << "HttpServer::onClose()-----connections.erase()失败;" << conn->getSockfd();
 	}
 
 	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req, util::Timestamp req_time)
@@ -252,7 +252,7 @@ namespace sone
 					resp.setHeader("Content-Type", "text/plain");
 			}
 			//gzip压缩
-			//s = gzipCompress(s);
+			s = gzipCompress(s);
 			resp.setContent(std::move(s));
 			//move之后s不可用
 			resp.setHeader("Content-Length", std::to_string(resp.getContent().length()));
@@ -274,7 +274,7 @@ namespace sone
 	std::string HttpServer::gzipCompress(const std::string& s)
 	{
 		std::stringstream ss, dest;
-		ss << s.c_str();
+		ss << s;
 		boost::iostreams::filtering_ostream out;
 		out.push(boost::iostreams::gzip_compressor());
 		out.push(dest);
