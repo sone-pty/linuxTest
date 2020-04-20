@@ -4,7 +4,7 @@
 #include "eventloop.h"
 #include "Socket.h"
 #include "TcpConnection.h"
-#include <unordered_map>
+#include <list>
 #include "eventloopThreadPool.h"
 #include "http.h"
 
@@ -38,14 +38,16 @@ private:
 	//压缩数据
 	std::string gzipCompress(const std::string& s);
 private:
-	//主线程eventloop
+	//主线程eventloop
 	eventloop* main_loop;
 	//监听套接字
 	Socket* listen_soc;
 	//用于连接的dispatcher
 	dispatcher* accept_dispatcher;
-	//保存TCPConnection的map
-	std::unordered_map<int, TcpConnection::ptr> connections;
+	//保存TCPConnection
+	std::list<TcpConnection::ptr> connections;
+	MutexLock _lock;
+	//std::unordered_map<int, TcpConnection::ptr> connections;
 	//线程池
 	std::unique_ptr<eventloopThreadPool> _threadpool;
 };

@@ -1,3 +1,0 @@
-2020-04-15 00:06:58	[TID]:9194	[PID]:9188	/home/sone/pro/http_server/HttpServer.cpp:176	[NOTE]:HttpServer::onClose()-----connections.erase()失败;7589
-2020-04-15 00:07:41	[TID]:9250	[PID]:9250	/home/sone/pro/http_server/Socket.cpp:36	[NOTE]:绑定地址失败
-2020-04-15 00:08:41	[TID]:9337	[PID]:9330	/home/sone/pro/http_server/HttpServer.cpp:176	[NOTE]:HttpServer::onClose()-----connections.erase()失败;134

@@ -55,12 +55,15 @@ namespace sone
 			//创建TcpConnection
 			InetAddress localaddr(util::getAddrbyFdV4(connfd));
 			TcpConnection::ptr conn = TcpConnection::ptr(new HttpConnection(ioLoop, connfd, localaddr, addr));
-			if(connections.find(connfd) != connections.end())
-			{
-				SONE_LOG_ERR() << "connections已经存在该连接，无法添加";
-				abort();
-			}
-			connections[connfd] = conn;
+			// if(connections.find(connfd) != connections.end())
+			// {
+			// 	SONE_LOG_ERR() << "connections已经存在该连接，无法添加";
+			// 	abort();
+			// }
+			// connections[connfd] = conn;
+			_lock.lock();
+			connections.push_back(conn);
+			_lock.unlock();
 			conn->setConnectionCallback(std::bind(&HttpServer::onConnection, this, std::placeholders::_1));
 			conn->setMessageCallback(std::bind(&HttpServer::onMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 			conn->setCloseCallback(std::bind(&HttpServer::onClose, this, std::placeholders::_1));
@@ -171,9 +174,15 @@ namespace sone
 
 	void HttpServer::onClose(const TcpConnection::ptr& conn)
 	{
-		int nums = connections.erase(conn->getSockfd());
-		if(nums == 0)
-			SONE_LOG_ERR() << "HttpServer::onClose()-----connections.erase()失败;" << conn->getSockfd();
+		_lock.lock();
+		std::list<TcpConnection::ptr>::iterator iter;
+		for(iter = connections.begin();iter != connections.end();++iter)
+		{
+			if(*iter == conn)
+				break;
+		}
+		connections.erase(iter);
+		_lock.unlock();
 	}
 
 	void HttpServer::createResponse(HttpResponse& resp, HttpRequest* req, util::Timestamp req_time)
