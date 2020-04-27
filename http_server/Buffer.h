@@ -28,6 +28,8 @@ public:
 	ssize_t findChar(char c, size_t begin, size_t end);
 	//从此buffer中读取出n个字节（将low后移）
 	bool moveLow(size_t n);
+	//将high设置为指定位置
+	bool moveHigh(size_t n);
 	//可能需要扩容
 	void append(const char* buf, size_t len);
 	void append(const std::string& message);

@@ -1,5 +1,6 @@
 #include "HttpServer.h"
 #include "HttpConnection.h"
+#include "FcgiConnection.h"
 #include <memory>
 #include "consts.h"
 #include <fcntl.h>
@@ -157,8 +158,21 @@ namespace sone
 		//SONE_LOG_TRACE() << "开始解析于" << t.to_string(false) << "的请求，成功解析完成";
 		
 		HttpResponse resp;
-		createResponse(resp, http_conn->getRequest(), t);
+		std::regex r(".*\\.php", std::regex::icase);
+		std::smatch sma;
+		std::string url = http_conn->getRequest()->getRequestUrl();
 		Buffer buf;
+		if (std::regex_match(url, sma, r))
+		{
+			Buffer* tmp = createPhpResponse(url);
+			buf.append("HTTP/1.1 200 OK\r\n");
+			buf.append(tmp->peek(), tmp->dataLen());
+			delete tmp;
+			http_conn->send(&buf);
+			return;
+		}
+		else
+			createResponse(resp, http_conn->getRequest(), t);
 		std::string message = std::move(resp.toString());
 		buf.append(message.c_str(), message.length());
 		http_conn->send(&buf);
@@ -266,7 +280,42 @@ namespace sone
 			//move之后s不可用
 			resp.setHeader("Content-Length", std::to_string(resp.getContent().length()));
 			resp.setRespState(http_resp_state::OK);
+			::close(fd);
 		}
+	}
+
+	Buffer* HttpServer::createPhpResponse(const std::string& url)
+	{
+		int fd = socket(AF_INET, SOCK_STREAM, 0);
+		InetAddress peer_addr("127.0.0.1", 9000, false);
+		::connect(fd, peer_addr.Sockaddr(), sizeof(sockaddr_in));
+		InetAddress local_addr(util::getAddrbyFdV4(fd));
+
+		FcgiConnection fcgi_conn(nullptr, fd, local_addr, peer_addr);
+
+		fcgi_conn.sendBeginRequest();
+		fcgi_conn.sendParams("SCRIPT_FILENAME", WEB_ROOT + url);
+		fcgi_conn.sendParams("SERVER_PROTOCOL", "HTTP/1.1");
+		fcgi_conn.sendParams("REQUEST_METHOD", "GET");
+		fcgi_conn.sendEndRequest();
+
+		Buffer* buf = new Buffer();
+		fcgi_conn.readContent(buf);
+		//对响应进行处理
+		FCGI_Header resp_header;
+		memcpy(&resp_header, buf->peek(), FCGI_HEADER_LEN);
+		int contentLen = (resp_header.contentLengthB1 << 8) + (resp_header.contentLengthB0);
+		if(resp_header.type == FCGI_STDOUT)
+		{
+			buf->moveHigh(contentLen + FCGI_HEADER_LEN);
+			buf->moveLow(FCGI_HEADER_LEN);
+		}
+		else if(resp_header.type == FCGI_STDERR)
+		{
+			buf->moveHigh(0);
+			buf->append(NOT_FOUND_PAGE.c_str(), NOT_FOUND_PAGE.length());
+		}
+		return buf;
 	}
 
 	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)

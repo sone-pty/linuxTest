@@ -25,6 +25,8 @@ private:
 	void onConnection(const TcpConnection::ptr& conn);
 	void onMessage(const TcpConnection::ptr& conn, Buffer* buffer, util::Timestamp t);
 	void onClose(const TcpConnection::ptr& conn);
+	void onPhpResponse(const TcpConnection::ptr& conn, Buffer* buf);
+	void onPhpClose(const TcpConnection::ptr& conn);
 private:
 	/*解析HTTP请求*/
 	http_line_state parseLine(Buffer* buf);
@@ -37,6 +39,8 @@ private:
 	void retErrResponse(const TcpConnection::ptr& conn);
 	//压缩数据
 	std::string gzipCompress(const std::string& s);
+	//fastcgi
+	Buffer* createPhpResponse(const std::string& url);
 private:
 	//主线程eventloop
 	eventloop* main_loop;

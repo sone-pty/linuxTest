@@ -117,6 +117,4 @@ int main(void)
 	(t.*ptr)();
 	return 0;
 	*/
-	int x = 2, y = 3, z = 4;
-	cout << (x < y ? y : z) << endl;
 }

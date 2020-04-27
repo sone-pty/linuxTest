@@ -8,6 +8,7 @@ namespace sone
 		_dispatcher->setReadCallback(std::bind(&TcpConnection::handleRead, this));
 		_dispatcher->setWriteCallback(std::bind(&TcpConnection::handleWrite, this));
 		_dispatcher->setCloseCallback(std::bind(&TcpConnection::handleClose, this));
+		_socket->setNoBlock(true);
 		//_socket->setKeepAlive(true);
 	}
 
