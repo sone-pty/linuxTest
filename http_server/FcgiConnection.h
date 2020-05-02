@@ -20,7 +20,7 @@ public:
 	void sendBeginRequest();
 	void sendParams(const std::string& key, const std::string& value);
 	void sendEndRequest();
-	ssize_t readContent(Buffer *buf);
+	void readContent(Buffer *buf);
 
 	void connecionEstablished() override;
 	void connecionDestroyed() override;

@@ -164,6 +164,8 @@ public:
 	bool setHeader(const std::string& key, const std::string& val);
 	std::string getContent();
 	void setContent(const std::string& content);
+	std::string getQueryString();
+	void setQueryString(const std::string &query_str);
 private:
 	//请求方法
 	http_method req_func;
@@ -181,6 +183,8 @@ private:
 	http_version _version;
 	//报文实体
 	std::string _content;
+	//请求字符串
+	std::string query_string;
 };
 
 class HttpResponse{

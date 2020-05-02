@@ -16,10 +16,14 @@ public:
 	~Buffer();
 	//从对应fd中读取数据
 	int read(int fd);
+	//读取指定字节数
+	int read(int fd, size_t len);
 	//返回此buffer在内存中的首地址（不一定是数据首地址）
 	char* begin();
 	//返回此buffer数据的首地址
 	char* peek();
+	//返回此buffer的可写入首地址
+	char* tail();
 	//从此buffer中的指定位置（默认从peek开始）读取指定字节的数据，并转为string
 	std::string getDataToString(size_t n, size_t pos = 0);
 	//从指定位置(pos表示距离peek()的距离)开始找到第一个出现的字符c，返回其距离peek()的长度;找不到则返回-1

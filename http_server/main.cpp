@@ -1,23 +1,8 @@
-#include <iostream>
 #include <signal.h>
-#include "Log.h"
-#include "mutex.h"
-#include "condition.h"
-#include <memory>
-#include <functional>
-#include "Thread.h"
-#include "nocopyable.h"
-#include <atomic>
-#include <vector>
-#include <bitset>
-#include "utils.h"
 #include "../sysHeader.h"
-#include "InetAddress.h"
-#include "Socket.h"
 #include "eventloop.h"
 #include "HttpServer.h"
-#include "http.h"
-#include "Buffer.h"
+#include "consts.h"
 
 using namespace std;
 using namespace sone;
@@ -38,17 +23,20 @@ void dynamic_arg_func(const char* fmt, ...)
 }
 */
 
-void handle_pipe(int sig) {}
+static void sig_pipe(int) {}
+
+// static void sig_alarm(int)
+// {
+// 	timerheap->tick();
+// 	alarm(EXPIRE_TIME);
+// }
 
 int main(void)
 {
-	//忽视SIGPIPE
-	struct sigaction sa;
-	sa.sa_handler = handle_pipe;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGPIPE, &sa, NULL);
-
+	//设置信号处理函数
+	//signal(SIGALRM, sig_alarm);
+	signal(SIGPIPE, sig_pipe);
+	//启动服务器
 	InetAddress addr("127.0.0.1", 8987, false);
 	eventloop loop;
 	HttpServer server(&loop, addr);

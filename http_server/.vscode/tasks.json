@@ -13,7 +13,7 @@
                     ] */
                     "args": [
                             "-g",
-                            "${fileDirname}/*.cpp",
+							"${fileDirname}/*.cpp",
 							"-lpthread",
 							"-lboost_iostreams",
 							"-lboost_zlib",

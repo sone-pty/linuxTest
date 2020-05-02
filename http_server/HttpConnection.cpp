@@ -1,4 +1,6 @@
 #include "HttpConnection.h"
+#include "TimerHeap.h"
+#include "consts.h"
 
 namespace sone
 {
@@ -43,7 +45,12 @@ namespace sone
 			if(_request->getHeader("Connection") == "close" || _request->getVersion() == http_version::HTTP10)
 				handleClose();
 			else
+			{
 				_dispatcher->disableWriting();
+				// Timer* tim = new Timer(HTTP_KEEPALIVE_TIME);
+				// tim->setCb(std::bind(&HttpConnection::handleTimerCb, this));
+				// _theap->pushTimer(tim);
+			}
 		}
 		else
 			output_buffer.moveLow(len);
@@ -67,5 +74,12 @@ namespace sone
 		//一次write发送完所有数据
 		else if(_request->getHeader("Connection") == "close" || _request->getVersion() == http_version::HTTP10)
 			handleClose();
+		//keep-alive
+		else
+		{
+			// Timer* tim = new Timer(HTTP_KEEPALIVE_TIME);
+			// tim->setCb(std::bind(&HttpConnection::handleTimerCb, this));
+			// _theap->pushTimer(tim);
+		}
 	}
 }

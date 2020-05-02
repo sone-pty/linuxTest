@@ -107,6 +107,8 @@ int kmp(string s, string p)
 	}
 	return i - j;
 }
+#define X 5+1
+#define Y X*3/2
 
 int main(void)
 {
@@ -117,4 +119,5 @@ int main(void)
 	(t.*ptr)();
 	return 0;
 	*/
+	cout << Y << endl;
 }

@@ -17,6 +17,10 @@ namespace sone
 	const std::string ERROR_REQ_PAGE = "<html><title>400 Bad Request</title><body><h1>Bad Request!</h1></body></html>";
 	//HTTP静态资源缓存时间（相对时间）
 	const unsigned long HTTP_CACHE_MAX_AGE = 86400;
+	//定时器周期（单位s）
+	//const unsigned long EXPIRE_TIME = 5;
+	//http-keep-alive时间（单位s）
+	//const unsigned long HTTP_KEEPALIVE_TIME = 10;
 } // namespace sone
 
 #endif

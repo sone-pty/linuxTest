@@ -1,4 +1,5 @@
 #include "Buffer.h"
+#include <unistd.h>
 #include <sys/uio.h>
 #include <algorithm>
 
@@ -47,6 +48,16 @@ namespace sone
 		return n;
 	}
 
+	int Buffer::read(int fd, size_t len)
+	{
+		int n;
+		if(len > (size_t)writeLen())
+			_vec.reserve(_vec.capacity() + (len << 1));
+		n = ::read(fd, tail(), len);
+		high += n;
+		return n;
+	}
+
 	void Buffer::append(const char* buf, size_t len)
 	{
 		if(len == 0)
@@ -86,6 +97,11 @@ namespace sone
 	char* Buffer::peek()
 	{
 		return begin() + low;
+	}
+
+	char* Buffer::tail()
+	{
+		return begin() + high;
 	}
 	
 	std::string Buffer::getDataToString(size_t n, size_t pos)

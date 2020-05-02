@@ -293,6 +293,11 @@ namespace sone
 		return _content;
 	}
 
+	std::string HttpRequest::getQueryString()
+	{
+		return query_string;
+	}
+
 	bool HttpRequest::setHeader(const std::string& key, const std::string& val)
 	{
 		auto iter = HEADERS.find(key);
@@ -340,6 +345,11 @@ namespace sone
 		_content = content;
 	}
 
+	void HttpRequest::setQueryString(const std::string &query_str)
+	{
+		query_string = query_str;
+	}
+	
 	/* HttpResponse */
 	HttpResponse::HttpResponse()
 		:_state(http_resp_state::UNKNOW), _version(http_version::UNKNOW) {}

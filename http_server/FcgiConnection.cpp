@@ -39,10 +39,37 @@ namespace sone
 		
 	}
 
-	ssize_t FcgiConnection::readContent(Buffer* buf)
+	void FcgiConnection::readContent(Buffer* buf)
 	{
-		ssize_t len = buf->read(_socket->getFd());
-		return len;
+		FCGI_Header resp_header;
+		int contentLen;
+		char tmp[8];
+
+		while(read(_socket->getFd(), &resp_header, FCGI_HEADER_LEN) > 0)
+		{
+			if(resp_header.type == FCGI_STDOUT)
+			{
+				contentLen = (resp_header.contentLengthB1 << 8) + (resp_header.contentLengthB0);
+				buf->read(_socket->getFd(), contentLen);
+				//跳过填充部分
+				if(resp_header.paddingLength > 0)
+					::read(_socket->getFd(), tmp, resp_header.paddingLength);
+			}
+			else if(resp_header.type == FCGI_STDERR)
+			{
+				contentLen = (resp_header.contentLengthB1 << 8) + (resp_header.contentLengthB0);
+				char error_content[contentLen];
+				::read(_socket->getFd(), error_content, contentLen);
+				//跳过填充部分
+				if(resp_header.paddingLength > 0)
+					::read(_socket->getFd(), tmp, resp_header.paddingLength);
+			}
+			else if(resp_header.type == FCGI_END_REQUEST)
+			{
+				FCGI_EndRequestBody endRequest;
+				::read(_socket->getFd(), &endRequest, sizeof(endRequest));
+			}
+		}
 	}
 
 	void FcgiConnection::sendBeginRequest()

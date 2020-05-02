@@ -56,12 +56,7 @@ namespace sone
 			//创建TcpConnection
 			InetAddress localaddr(util::getAddrbyFdV4(connfd));
 			TcpConnection::ptr conn = TcpConnection::ptr(new HttpConnection(ioLoop, connfd, localaddr, addr));
-			// if(connections.find(connfd) != connections.end())
-			// {
-			// 	SONE_LOG_ERR() << "connections已经存在该连接，无法添加";
-			// 	abort();
-			// }
-			// connections[connfd] = conn;
+			
 			_lock.lock();
 			connections.push_back(conn);
 			_lock.unlock();
@@ -164,11 +159,23 @@ namespace sone
 		Buffer buf;
 		if (std::regex_match(url, sma, r))
 		{
-			Buffer* tmp = createPhpResponse(url);
-			buf.append("HTTP/1.1 200 OK\r\n");
-			buf.append(tmp->peek(), tmp->dataLen());
-			delete tmp;
-			http_conn->send(&buf);
+			Buffer* tmp = createPhpResponse(http_conn->getRequest());
+			//获取动态资源成功
+			if(tmp)
+			{
+				buf.append("HTTP/1.1 200 OK\r\n");
+				buf.append(tmp->peek(), tmp->dataLen());
+				delete tmp;
+				http_conn->send(&buf);
+			}
+			//获取动态资源失败
+			else
+			{
+				buf.append("HTTP/1.1 404 NOT FOUND\r\n");
+				buf.append("Content-Length: " + std::to_string(NOT_FOUND_PAGE.length()) + "\r\n\r\n");
+				buf.append(NOT_FOUND_PAGE);
+				http_conn->send(&buf);
+			}
 			return;
 		}
 		else
@@ -284,7 +291,7 @@ namespace sone
 		}
 	}
 
-	Buffer* HttpServer::createPhpResponse(const std::string& url)
+	Buffer* HttpServer::createPhpResponse(HttpRequest* req)
 	{
 		int fd = socket(AF_INET, SOCK_STREAM, 0);
 		InetAddress peer_addr("127.0.0.1", 9000, false);
@@ -294,28 +301,23 @@ namespace sone
 		FcgiConnection fcgi_conn(nullptr, fd, local_addr, peer_addr);
 
 		fcgi_conn.sendBeginRequest();
-		fcgi_conn.sendParams("SCRIPT_FILENAME", WEB_ROOT + url);
+		fcgi_conn.sendParams("SCRIPT_FILENAME", WEB_ROOT + req->getRequestUrl());
 		fcgi_conn.sendParams("SERVER_PROTOCOL", "HTTP/1.1");
 		fcgi_conn.sendParams("REQUEST_METHOD", "GET");
+		//fcgi_conn.sendParams("CONTENT_LENGTH", "0");
+		fcgi_conn.sendParams("QUERY_STRING", req->getQueryString());
 		fcgi_conn.sendEndRequest();
 
 		Buffer* buf = new Buffer();
 		fcgi_conn.readContent(buf);
-		//对响应进行处理
-		FCGI_Header resp_header;
-		memcpy(&resp_header, buf->peek(), FCGI_HEADER_LEN);
-		int contentLen = (resp_header.contentLengthB1 << 8) + (resp_header.contentLengthB0);
-		if(resp_header.type == FCGI_STDOUT)
+		
+		if(buf->dataLen())
+			return buf;
+		else
 		{
-			buf->moveHigh(contentLen + FCGI_HEADER_LEN);
-			buf->moveLow(FCGI_HEADER_LEN);
+			delete buf;
+			return nullptr;
 		}
-		else if(resp_header.type == FCGI_STDERR)
-		{
-			buf->moveHigh(0);
-			buf->append(NOT_FOUND_PAGE.c_str(), NOT_FOUND_PAGE.length());
-		}
-		return buf;
 	}
 
 	bool HttpServer::parseContent(Buffer* buf, const TcpConnection::ptr& conn)
@@ -413,6 +415,7 @@ namespace sone
 			else
 			{
 				req->setRequestUrl(util::URLDecode(buf->getDataToString(index - first_space - 1, first_space + 1)));
+				req->setQueryString(util::URLDecode(buf->getDataToString(second_space - index - 1, index + 1)));
 				//解析参数，需要先解析后解码
 				std::string params = buf->getDataToString(second_space - index - 1, index + 1), temp;
 				size_t split = 0, lastsplit = -1, eq = 0;
