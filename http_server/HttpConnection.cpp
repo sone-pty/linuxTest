@@ -34,7 +34,9 @@ namespace sone
 		else if(n == 0)
 			handleClose();
 		else
-			SONE_LOG_ERR() << "handleRead()--read() failed";
+		{
+			//SONE_LOG_ERR() << "handleRead()--read() failed";
+		}
 	}
 
 	void HttpConnection::handleWrite()
