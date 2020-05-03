@@ -33,7 +33,10 @@ namespace sone
 		else
 			len = sizeof(struct sockaddr_in6);
 		if(bind(_fd, addr.Sockaddr(), len) < 0)
+		{
 			SONE_LOG_ERR() << "绑定地址失败";
+			abort();
+		}
 	}
 
 	void Socket::listen()
