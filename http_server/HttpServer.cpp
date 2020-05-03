@@ -100,7 +100,7 @@ namespace sone
 		if (!http_conn->getRequest())
 			http_conn->setRequest(new HttpRequest());
 
-		//SONE_LOG_ROOT() << buffer->getDataToString(buffer->dataLen());
+		SONE_LOG_ROOT() << buffer->getDataToString(buffer->dataLen());
 		while ((req_state = http_conn->getReqstate()) == req_check_state::CHECK_CONTENT || (line_state = parseLine(buffer)) == http_line_state::LINE_OK)
 		{
 			//req_state = http_conn->getReqstate();
