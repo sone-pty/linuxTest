@@ -1,3 +1,5 @@
 2020-05-03 20:04:07	[TID]:11197	[PID]:11197	/home/sone/pro/http_server/Socket.cpp:37	[NOTE]:绑定地址失败
 2020-05-03 20:30:35	[TID]:13251	[PID]:13251	/home/sone/pro/http_server/Socket.cpp:37	[NOTE]:绑定地址失败
 2020-05-03 21:09:30	[TID]:14492	[PID]:14492	/home/sone/pro/http_server/Socket.cpp:37	[NOTE]:绑定地址失败
+2020-05-04 16:01:59	[TID]:4473	[PID]:4473	/home/sone/pro/http_server/Socket.cpp:37	[NOTE]:绑定地址失败
+2020-05-04 16:39:07	[TID]:4324	[PID]:4324	/home/sone/pro/http_server/Socket.cpp:37	[NOTE]:绑定地址失败

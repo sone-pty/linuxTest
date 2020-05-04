@@ -86,8 +86,8 @@ namespace util
 				i += 3;
 			}
 		}
-
-		return (&(*res.begin()));
+		res.push_back('\0');
+		return std::string(&(*res.begin()));
 	}
 
 	struct Icase : public std::binary_function<std::string, std::string, bool>
