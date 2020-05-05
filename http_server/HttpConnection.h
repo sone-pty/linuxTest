@@ -3,6 +3,7 @@
 
 #include "TcpConnection.h"
 #include "http.h"
+#include "TimerHeap.h"
 
 namespace sone
 {
@@ -10,7 +11,7 @@ namespace sone
 class HttpConnection : public TcpConnection{
 public:
 	typedef std::shared_ptr<HttpConnection> ptr;
-	HttpConnection(eventloop *l, int fd, const InetAddress &local_addr, const InetAddress &peer_addr);
+	HttpConnection(eventloop *l, int fd, const InetAddress &local_addr, const InetAddress &peer_addr, TimerHeap* th);
 	virtual ~HttpConnection();
 	void connecionEstablished() override;
 	void connecionDestroyed() override;
@@ -24,11 +25,17 @@ protected:
 	void handleRead() override;
 	void handleWrite() override;
 	void handleClose() override;
+	void handleTimerCb();
+
 private:
 	//http请求
 	std::unique_ptr<HttpRequest> _request;
 	//请求解析状态
 	req_check_state _state = req_check_state::CHECK_REQUESTLINE;
+	//定时器堆
+	TimerHeap* _theap;
+	//定时器
+	Timer* _tim = nullptr;
 };
 
 }

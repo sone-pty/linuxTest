@@ -11,12 +11,14 @@
 namespace sone
 {
 
+class TimerHeap;
+
 //工作线程数量
 const static int THREAD_NUMS = 8;
 
 class HttpServer{
 public:
-	HttpServer(eventloop* loop, const InetAddress& listenaddr);
+	HttpServer(eventloop* loop, const InetAddress& listenaddr, TimerHeap* th);
 	~HttpServer();
 	eventloop* getLoop();
 	void start();
@@ -52,6 +54,7 @@ private:
 	//std::unordered_map<int, TcpConnection::ptr> connections;
 	//线程池
 	std::unique_ptr<eventloopThreadPool> _threadpool;
+	TimerHeap* _theap;
 };
 
 }

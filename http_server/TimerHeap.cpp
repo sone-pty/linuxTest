@@ -33,6 +33,7 @@ namespace sone
 				break;
 			h = p;
 		}
+		timer->setIndex(h);	
 	}
 
 	void TimerHeap::popTimer()
@@ -43,19 +44,26 @@ namespace sone
 			return;
 
 		std::swap(_vec[0], _vec[_nums - 1]);
-		delete _vec[_nums - 1];
+		//delete _vec[_nums - 1];
+		_vec[_nums - 1]->setIndex(-2);
 		_vec[_nums - 1] = nullptr;
 		--_nums;
-
 		//下滤
-		size_t index = 0, child;
-		while(index < _nums && 2 * index <= _nums - 2)
+		down(0);
+	}
+
+	void TimerHeap::down(size_t index)
+	{
+		size_t child;
+		while(index < _nums)
 		{
 			if(2 * index + 2 < _nums)
 				child = (_vec[2 * index + 1]->getExpire() < _vec[2 * index + 2]->getExpire()) ? 2 * index + 1 : 2 * index + 2;
-			else
+			else if(2 * index + 1 < _nums)
 				child = 2 * index + 1;
-			if(_vec[index] > _vec[child])
+			else
+				break;
+			if (_vec[index]->getExpire() > _vec[child]->getExpire())
 			{
 				std::swap(_vec[index], _vec[child]);
 				index = child;
@@ -78,13 +86,16 @@ namespace sone
 	{
 		Timer* timer;
 		time_t cur = time(nullptr);
+		std::function<void()> cb;
 
 		while(!empty())
 		{
 			timer = topTimer();
 			if(!timer || timer->getExpire() > cur)
 				break;
-			timer->getCb()();
+			cb = timer->getCb();
+			if(cb)
+				cb();
 			popTimer();
 		}
 	}

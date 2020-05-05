@@ -20,8 +20,8 @@
 
 namespace sone
 {
-	HttpServer::HttpServer(eventloop* loop, const InetAddress& listenaddr)
-		:main_loop(loop), _threadpool(new eventloopThreadPool(THREAD_NUMS))
+	HttpServer::HttpServer(eventloop* loop, const InetAddress& listenaddr, TimerHeap* th)
+		:main_loop(loop), _threadpool(new eventloopThreadPool(THREAD_NUMS)), _theap(th)
 	{
 		//创建监听套接字
 		listen_soc = new Socket();
@@ -55,7 +55,7 @@ namespace sone
 			eventloop* ioLoop = _threadpool->getLoop(connfd);
 			//创建TcpConnection
 			InetAddress localaddr(util::getAddrbyFdV4(connfd));
-			TcpConnection::ptr conn = TcpConnection::ptr(new HttpConnection(ioLoop, connfd, localaddr, addr));
+			TcpConnection::ptr conn = TcpConnection::ptr(new HttpConnection(ioLoop, connfd, localaddr, addr, _theap));
 			
 			_lock.lock();
 			connections.push_back(conn);

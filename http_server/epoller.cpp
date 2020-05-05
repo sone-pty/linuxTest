@@ -44,7 +44,7 @@ namespace sone
 		}
 		else if(ret == 0)
 		{
-			SONE_LOG_TRACE() << "epoller::epoll(): no events happened";
+			//SONE_LOG_TRACE() << "epoller::epoll(): no events happened";
 		}
 		else
 		{

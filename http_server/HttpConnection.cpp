@@ -1,18 +1,19 @@
 #include "HttpConnection.h"
-#include "TimerHeap.h"
 #include "consts.h"
+#include "Log.h"
 
 namespace sone
 {
-	HttpConnection::HttpConnection(eventloop* l, int fd, const InetAddress& local_addr, const InetAddress& peer_addr)
-		:TcpConnection(l, fd, local_addr, peer_addr)
+	HttpConnection::HttpConnection(eventloop* l, int fd, const InetAddress& local_addr, const InetAddress& peer_addr, TimerHeap* th)
+		:TcpConnection(l, fd, local_addr, peer_addr), _theap(th)
 	{
 
 	}
 
 	HttpConnection::~HttpConnection()
 	{
-
+		SONE_LOG_TRACE() << "delete Http Connection";
+		delete _tim;
 	}
 
 	void HttpConnection::connecionEstablished()
@@ -28,15 +29,25 @@ namespace sone
 
 	void HttpConnection::handleRead()
 	{
+		_theap->getLock().lock();
+		if(_tim && _tim->getIndex() == -2)
+			return;
+		else if(_tim && _tim->getIndex() >= 0)
+		{
+			//定时器延时并调整堆序
+			_tim->setExpire(time(nullptr) + HTTP_KEEPALIVE_TIME);
+			_theap->down(_tim->getIndex());
+		}
+		_theap->getLock().unlock();
 		ssize_t n = input_buffer.read(_socket->getFd());
 		if(n > 0)
 			message_cb(shared_from_this(), &input_buffer, util::Timestamp());
 		else if(n == 0)
-			handleClose();
-		else
 		{
-			//SONE_LOG_ERR() << "handleRead()--read() failed";
+			//关闭连接
 		}
+		else
+			SONE_LOG_ERR() << "handleRead()--read() failed";
 	}
 
 	void HttpConnection::handleWrite()
@@ -50,9 +61,13 @@ namespace sone
 			else
 			{
 				_dispatcher->disableWriting();
-				// Timer* tim = new Timer(HTTP_KEEPALIVE_TIME);
-				// tim->setCb(std::bind(&HttpConnection::handleTimerCb, this));
-				// _theap->pushTimer(tim);
+				if(!_tim)
+				{
+					Timer* tim = new Timer(HTTP_KEEPALIVE_TIME);
+					tim->setCb(std::bind(&HttpConnection::handleTimerCb, this));
+					_theap->pushTimer(tim);
+					this->_tim = tim;
+				}
 			}
 		}
 		else
@@ -61,9 +76,15 @@ namespace sone
 
 	void HttpConnection::handleClose()
 	{
+		SONE_LOG_TRACE() << "handleClose";
 		loop->removeDispatcher(_dispatcher.get());
 		if(close_cb)
 			close_cb(shared_from_this());
+	}
+
+	void HttpConnection::handleTimerCb()
+	{
+		loop->runInLoop(std::bind(&HttpConnection::handleClose, this));
 	}
 
 	void HttpConnection::send(Buffer* buf)
@@ -80,9 +101,13 @@ namespace sone
 		//keep-alive
 		else
 		{
-			// Timer* tim = new Timer(HTTP_KEEPALIVE_TIME);
-			// tim->setCb(std::bind(&HttpConnection::handleTimerCb, this));
-			// _theap->pushTimer(tim);
+			if(!_tim)
+			{
+				Timer* tim = new Timer(HTTP_KEEPALIVE_TIME);
+				tim->setCb(std::bind(&HttpConnection::handleTimerCb, this));
+				_theap->pushTimer(tim);
+				this->_tim = tim;
+			}
 		}
 	}
 }

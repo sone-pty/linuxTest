@@ -15,13 +15,18 @@ public:
 	Timer(size_t sec)
 		:expire(time(nullptr) + sec) {}
 	time_t getExpire() const { return expire; }
+	void setExpire(time_t e) { expire = e; }
 	std::function<void()> getCb() const { return _cb; }
 	void setCb(std::function<void()> cb) { this->_cb = std::move(cb); }
+	int getIndex() { return _index; }
+	void setIndex(int index) { _index = index; }
 private:
 	//过期时间
 	time_t expire;
 	//回调
-	std::function<void()> _cb;	
+	std::function<void()> _cb;
+	//在堆中的下标（-1表示未放入堆中，-2表示已经触发回调）
+	int _index = -1;
 };
 
 class TimerHeap{
@@ -35,6 +40,9 @@ public:
 	Timer* topTimer();
 	void tick();
 	bool empty();
+	MutexLock& getLock() { return _lock; }
+	//从指定下标位置下滤
+	void down(size_t index);
 private:
 	//构建二叉堆的数组
 	std::vector<Timer*> _vec;

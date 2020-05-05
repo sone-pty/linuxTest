@@ -18,9 +18,9 @@ namespace sone
 	//HTTP静态资源缓存时间（相对时间）
 	const unsigned long HTTP_CACHE_MAX_AGE = 86400;
 	//定时器周期（单位s）
-	//const unsigned long EXPIRE_TIME = 5;
+	const unsigned long EXPIRE_TIME = 5;
 	//http-keep-alive时间（单位s）
-	//const unsigned long HTTP_KEEPALIVE_TIME = 10;
+	const unsigned long HTTP_KEEPALIVE_TIME = 30;
 } // namespace sone
 
 #endif
