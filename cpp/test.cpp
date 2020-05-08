@@ -14,6 +14,7 @@
 #include <bitset>
 #include <queue>
 #include <regex>
+#include <list>
 
 using namespace std;
 
@@ -119,5 +120,4 @@ int main(void)
 	(t.*ptr)();
 	return 0;
 	*/
-	cout << Y << endl;
 }

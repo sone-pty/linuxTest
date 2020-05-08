@@ -41,8 +41,8 @@ int main(void)
 	signal(SIGPIPE, sig_pipe);
 	alarm(EXPIRE_TIME);
 	//启动服务器
-	//InetAddress addr("127.0.0.1", 8987, false);
-	InetAddress addr("172.17.0.16", 8987, false);
+	InetAddress addr("127.0.0.1", 8987, false);
+	//InetAddress addr("172.17.0.16", 8987, false);
 	eventloop loop;
 	HttpServer server(&loop, addr, timerheap);
 	server.start();

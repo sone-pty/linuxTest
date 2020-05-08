@@ -7,6 +7,7 @@
 #include <list>
 #include "eventloopThreadPool.h"
 #include "http.h"
+#include "LRUCache.h"
 
 namespace sone
 {
@@ -15,6 +16,8 @@ class TimerHeap;
 
 //工作线程数量
 const static int THREAD_NUMS = 8;
+//LRU缓存容量	
+const static int LRUCACHE_CAPCITY = 8;
 
 class HttpServer{
 public:
@@ -54,7 +57,10 @@ private:
 	//std::unordered_map<int, TcpConnection::ptr> connections;
 	//线程池
 	std::unique_ptr<eventloopThreadPool> _threadpool;
+	//定时器堆
 	TimerHeap* _theap;
+	//缓存
+	LRUCache _cache;
 };
 
 }

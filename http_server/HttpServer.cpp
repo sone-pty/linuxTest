@@ -21,7 +21,7 @@
 namespace sone
 {
 	HttpServer::HttpServer(eventloop* loop, const InetAddress& listenaddr, TimerHeap* th)
-		:main_loop(loop), _threadpool(new eventloopThreadPool(THREAD_NUMS)), _theap(th)
+		:main_loop(loop), _threadpool(new eventloopThreadPool(THREAD_NUMS)), _theap(th), _cache(LRUCACHE_CAPCITY)
 	{
 		//创建监听套接字
 		listen_soc = new Socket();
@@ -256,11 +256,16 @@ namespace sone
 		else
 		{
 			//对应的资源
+			/*
 			std::string s;
 			s.reserve(BUFSIZE);
 			ssize_t len;
 			while((len = ::read(fd, buf, BUFSIZE)) != 0)
 				s.append(buf, buf + len);
+			*/
+			if(!_cache.getValue(complete_url))
+				_cache.setValue(complete_url);
+			std::string s(_cache.getValue(complete_url), _cache.getSize(complete_url));
 			//设置Content-type
 			std::regex r("\\.([a-z]+)", std::regex::icase);
 			std::smatch sma;

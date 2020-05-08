@@ -8,7 +8,7 @@ namespace sone
 	//服务器版本
 	const std::string SERVER_VERSION = "sone/1.0";
 	//资源根目录
-	const std::string WEB_ROOT = "/home/ubuntu/web_root";
+	const std::string WEB_ROOT = "/home/sone/web_root";
 	//缓冲区大小
 	const int BUFSIZE = 8192;
 	//404页面

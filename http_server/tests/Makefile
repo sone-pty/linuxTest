@@ -8,3 +8,5 @@ test_server:test_server.cpp ../utils.cpp ../Log.cpp ../Socket.cpp ../InetAddress
 	g++ test_server.cpp ../utils.cpp ../Log.cpp ../Socket.cpp ../InetAddress.cpp ../Thread.cpp ../mutex.cpp -lpthread -g -o test_server
 test_TimerHeap:test_TimerHeap.cpp ../TimerHeap.cpp ../mutex.cpp
 	g++ test_TimerHeap.cpp ../TimerHeap.cpp ../mutex.cpp -lpthread -g -o test_TimerHeap
+test_LRUCache:test_LRUCache.cpp ../LRUCache.cpp ../mutex.cpp
+	g++ test_LRUCache.cpp ../LRUCache.cpp ../mutex.cpp -lpthread -g -o test_LRUCache
