@@ -1,8 +1,0 @@
-2020-05-05 22:30:32	[TID]:14356	[PID]:14348	/home/sone/pro/http_server/HttpConnection.cpp:85	[NOTE]:handleClose
-2020-05-05 22:30:32	[TID]:14356	[PID]:14348	/home/sone/pro/http_server/HttpConnection.cpp:15	[NOTE]:delete Http Connection
-2020-05-05 22:32:17	[TID]:14356	[PID]:14348	/home/sone/pro/http_server/HttpConnection.cpp:85	[NOTE]:handleClose
-2020-05-05 22:32:17	[TID]:14356	[PID]:14348	/home/sone/pro/http_server/HttpConnection.cpp:15	[NOTE]:delete Http Connection
-2020-05-08 22:44:02	[TID]:20545	[PID]:20539	/home/sone/pro/http_server/HttpConnection.cpp:79	[NOTE]:handleClose
-2020-05-08 22:44:02	[TID]:20545	[PID]:20539	/home/sone/pro/http_server/HttpConnection.cpp:15	[NOTE]:delete Http Connection
-2020-05-08 22:49:05	[TID]:21503	[PID]:21495	/home/sone/pro/http_server/HttpConnection.cpp:79	[NOTE]:handleClose
-2020-05-08 22:49:05	[TID]:21503	[PID]:21495	/home/sone/pro/http_server/HttpConnection.cpp:15	[NOTE]:delete Http Connection

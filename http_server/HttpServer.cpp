@@ -291,6 +291,7 @@ namespace sone
 			resp.setContent(std::move(s));
 			//move之后s不可用
 			resp.setHeader("Content-Length", std::to_string(resp.getContent().length()));
+			resp.setHeader("Content-Encoding", "gzip");
 			resp.setRespState(http_resp_state::OK);
 			::close(fd);
 		}
@@ -344,7 +345,7 @@ namespace sone
 		out.push(boost::iostreams::gzip_compressor());
 		out.push(dest);
 		boost::iostreams::copy(ss, out);
-		return ss.str();
+		return dest.str();
 	}
 
 	bool HttpServer::parseHeaderLine(Buffer* buf, const TcpConnection::ptr& conn)
