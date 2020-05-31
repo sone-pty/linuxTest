@@ -70,6 +70,7 @@ enum class http_headers
 	Purpose,
 	If_Modified_Since,
 	Referer,
+	Origin,
 	//响应首部
 	Age,
 	Public,

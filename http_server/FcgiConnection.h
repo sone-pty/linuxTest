@@ -20,6 +20,7 @@ public:
 	void sendBeginRequest();
 	void sendParams(const std::string& key, const std::string& value);
 	void sendEndRequest();
+	void sendContentHeader(const std::string& content, size_t cLen);
 	void readContent(Buffer *buf);
 
 	void connecionEstablished() override;

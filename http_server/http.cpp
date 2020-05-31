@@ -54,6 +54,7 @@ namespace sone
 			X(Purpose)
 			X(If_Modified_Since)
 			X(Referer)
+			X(Origin)
 			X(Age)
 			X(Public)
 			X(Server)
@@ -192,6 +193,8 @@ namespace sone
 				res = "If-Modified-Since";break;
 			case http_headers::Referer:
 				res = "Referer";break;
+			case http_headers::Origin:
+				res = "Origin";break;
 			case http_headers::Age:
 				res = "Age";break;
 			case http_headers::Public:

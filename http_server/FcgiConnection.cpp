@@ -109,6 +109,35 @@ namespace sone
 		output_buffer.moveLow(len);
 	}
 
+	void FcgiConnection::sendContentHeader(const std::string& content, size_t cLen)
+	{
+		FCGI_Header content_header, end_header;
+		//发送主体头部
+		content_header.version = FCGI_VERSION_1;
+		content_header.type = FCGI_STDIN;
+		content_header.requestIdB1 = (unsigned char)((_requestId >> 8) & 0xff);
+		content_header.requestIdB0 = (unsigned char)(_requestId & 0xff);
+		content_header.contentLengthB1 = (unsigned char)((cLen >> 8) & 0xff);
+		content_header.contentLengthB0 = (unsigned char)(cLen & 0xff);
+		content_header.paddingLength = 0;
+		content_header.reserved = 0;
+		output_buffer.append((char*)&content_header, sizeof(content_header));
+		output_buffer.append(content);
+		//发送结束头部
+		end_header.version = FCGI_VERSION_1;
+		end_header.type = FCGI_STDIN;
+		end_header.requestIdB1 = (unsigned char)((_requestId >> 8) & 0xff);
+		end_header.requestIdB0 = (unsigned char)(_requestId & 0xff);
+		end_header.contentLengthB0 = 0;
+		end_header.contentLengthB1 = 0;
+		end_header.paddingLength = 0;
+		end_header.reserved = 0;
+		output_buffer.append((char*)&end_header, sizeof(end_header));
+		
+		ssize_t len = ::write(_socket->getFd(), output_buffer.peek(), output_buffer.dataLen());
+		output_buffer.moveLow(len);
+	}
+
 	void FcgiConnection::makeValueBody(const std::string& key, const std::string& value, unsigned char*	bodybuffer, int* bodylen)
 	{
 		unsigned char *startBodyBuffPtr = bodybuffer;  //记录body的开始位置

@@ -303,17 +303,31 @@ namespace sone
 		InetAddress peer_addr("127.0.0.1", 9000, false);
 		::connect(fd, peer_addr.Sockaddr(), sizeof(sockaddr_in));
 		InetAddress local_addr(util::getAddrbyFdV4(fd));
+		std::string body = util::URLDecode(req->getContent());
 
 		FcgiConnection fcgi_conn(nullptr, fd, local_addr, peer_addr);
 
 		fcgi_conn.sendBeginRequest();
 		fcgi_conn.sendParams("SCRIPT_FILENAME", WEB_ROOT + req->getRequestUrl());
-		fcgi_conn.sendParams("SERVER_PROTOCOL", "HTTP/1.1");
-		fcgi_conn.sendParams("REQUEST_METHOD", "GET");
-		//fcgi_conn.sendParams("CONTENT_LENGTH", "0");
-		fcgi_conn.sendParams("QUERY_STRING", req->getQueryString());
+		if(req->getVersion() == http_version::HTTP11)
+			fcgi_conn.sendParams("SERVER_PROTOCOL", "HTTP/1.1");
+		else
+			fcgi_conn.sendParams("SERVER_PROTOCOL", "HTTP/1.0");
+		if(req->getMethod() == http_method::GET)
+			fcgi_conn.sendParams("REQUEST_METHOD", "GET");
+		else
+			fcgi_conn.sendParams("REQUEST_METHOD", "POST");
+		if(req->getMethod() == http_method::GET)
+			fcgi_conn.sendParams("QUERY_STRING", req->getQueryString());
+		else
+		{
+			fcgi_conn.sendParams("CONTENT_LENGTH", std::to_string(body.length()));
+			fcgi_conn.sendParams("CONTENT_TYPE", "application/x-www-form-urlencoded");
+		}
 		fcgi_conn.sendEndRequest();
-
+		
+		if(req->getMethod() == http_method::POST)
+			fcgi_conn.sendContentHeader(req->getContent(), req->getContent().length());
 		Buffer* buf = new Buffer();
 		fcgi_conn.readContent(buf);
 		
@@ -331,6 +345,27 @@ namespace sone
 		HttpConnection::ptr http_conn = std::dynamic_pointer_cast<HttpConnection>(conn);
 		HttpRequest* req = http_conn->getRequest();
 		req->setContent(buf->getDataToString(buf->dataLen()));
+		//post提交的表单参数（默认application/x-www-form-urlencoded格式）
+		std::string params = req->getContent(), temp;
+		if(req->getMethod() == http_method::POST && req->getHeader("Content-Type") == "application/x-www-form-urlencoded")
+		{
+			size_t split = 0, lastsplit = -1, eq = 0;
+			while((split = params.find('&', lastsplit + 1)) != std::string::npos)
+			{
+				temp = params.substr(lastsplit + 1, split - lastsplit - 1);
+				if((eq = temp.find('=')) != std::string::npos)
+					req->setParam(util::URLDecode(temp.substr(0, eq)), util::URLDecode(temp.substr(eq + 1, temp.length() - eq - 1)));
+				else
+					return false;
+				lastsplit = split;
+			}
+			//最后一对参数
+			temp = params.substr(lastsplit + 1);
+			if((eq = temp.find('=')) != std::string::npos)
+				req->setParam(util::URLDecode(temp.substr(0, eq)), util::URLDecode(temp.substr(eq + 1, temp.length() - eq - 1)));
+			else
+				return false;
+		}
 		buf->moveLow(buf->dataLen());
 		//以防keep-alive，重置解析状态
 		http_conn->setReqstate(req_check_state::CHECK_REQUESTLINE);
