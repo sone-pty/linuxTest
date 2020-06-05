@@ -17,6 +17,7 @@
 							"-lpthread",
 							"-lboost_iostreams",
 							"-lboost_zlib",
+							"-O3",
                             //"-lboost_locale",
                             //"-D NDEBUG",
                             "-o",
