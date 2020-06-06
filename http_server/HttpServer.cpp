@@ -222,16 +222,18 @@ namespace sone
 		resp.setHeader("Date", util::Timestamp().toGMTString());
 		//检查请求中的协商缓存
 		std::string modified_time = req->getHeader("If-Modified-Since");
+
+		struct stat s;
+		int ret = ::fstat(fd, &s);
+		if(ret < 0)
+			SONE_LOG_ERR() << "fstat(...) failed";
+		ts.setSecond(s.st_mtim.tv_sec);
+
 		if(modified_time != "")
 		{
 			//检查最后一次修改时间
 			if(fd != -1)
 			{
-				struct stat s;
-				int ret = ::fstat(fd, &s);
-				if(ret < 0)
-					SONE_LOG_ERR() << "fstat(...) failed";
-				ts.setSecond(s.st_mtim.tv_sec);
 				std::string tsGmt = ts.toGMTString();
 				//协商缓存成功，直接返回
 				if(util::compareGMTStr(modified_time, tsGmt))
